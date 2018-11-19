@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import Hello from './components/Hello';
 
-class App extends Component {
+class App extends React.Component {
   private tesst = async () => {
     await fetch('');
   }
