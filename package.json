@@ -1,6 +1,8 @@
 {
   "name": "cra-typescript-electron",
   "version": "0.1.0",
+  "author": "Chris Idzerda",
+  "description": "CRA Typescript Electron",
   "private": true,
   "dependencies": {
     "@types/enzyme": "^3.1.15",
@@ -9,18 +11,37 @@
     "@types/node": "10.12.9",
     "@types/react": "16.7.6",
     "@types/react-dom": "16.0.9",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "node-sass": "^4.10.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
-    "typescript": "3.1.6"
+    "typescript": "3.1.6",
+    "wait-on": "^3.2.0"
   },
+  "build": {
+    "appId": "com.example.cra-typescript-electron",
+    "extends": "react-cra",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "icon": "build/favicon.ico"
+    }
+  },
+  "homepage": ".",
+  "main": "public/electron.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env BROWSER=none DEV_URL=http://localhost:4349 PORT=4349 node start.js",
+    "react-start": "cross-env PORT=4349 react-scripts start",
+    "react-build": "react-scripts build",
+    "electron-start": "wait-on http://localhost:4349 && electron .",
+    "electron-build": "electron-builder",
     "test": "react-scripts test --watch --coverage",
+    "release": "yarn react-build && yarn electron-build --publish=always",
+    "build": "yarn react-build && yarn electron-build",
     "eject": "react-scripts eject"
   },
   "jest": {
@@ -34,6 +55,10 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-builder": "^20.36.2"
   },
   "browserslist": [
     ">0.2%",

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5023eb7f-bb41-4df3-9db5-f6fb1fcb4c2e}</ProjectGuid>
+    <ProjectGuid>{238288b8-3697-4a04-a00a-acc174a839b0}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectView>ProjectFiles</ProjectView>
     <WorkingDirectory>.</WorkingDirectory>
@@ -18,37 +18,24 @@
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <StartWebBrowser>False</StartWebBrowser>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+    <Environment>BROWSER=none
+DEV_URL=http://localhost:4349
+PORT=4349</Environment>
+    <StartupFile>start.js</StartupFile>
+    <ScriptArguments>--inspect-brk=6006</ScriptArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="public\electron.js" />
+    <Compile Include="start.js" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="public\" />
-    <Folder Include="src\" />
-    <Folder Include="src\components\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DEBUG.txt" />
     <Content Include="package.json" />
-    <Content Include="public\favicon.ico" />
-    <Content Include="public\index.html" />
-    <Content Include="public\manifest.json" />
-    <Content Include="README.md" />
-    <Content Include="README.txt" />
-    <Content Include="src\App.sass" />
-    <Content Include="src\index.sass" />
-    <Content Include="src\logo.svg" />
-    <Content Include="tsconfig.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="src\App.test.tsx" />
-    <TypeScriptCompile Include="src\App.tsx" />
-    <TypeScriptCompile Include="src\components\Hello.test.tsx" />
-    <TypeScriptCompile Include="src\components\Hello.tsx" />
-    <TypeScriptCompile Include="src\index.tsx" />
-    <TypeScriptCompile Include="src\react-app-env.d.ts" />
-    <TypeScriptCompile Include="src\serviceWorker.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="src\setupTests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
@@ -62,6 +49,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://localhost:1337</CustomServerUrl>
