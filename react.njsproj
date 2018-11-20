@@ -29,6 +29,7 @@ PORT=4349</Environment>
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="src\" />
+    <Folder Include="src\components\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
@@ -45,6 +46,8 @@ PORT=4349</Environment>
   <ItemGroup>
     <TypeScriptCompile Include="src\App.test.tsx" />
     <TypeScriptCompile Include="src\App.tsx" />
+    <TypeScriptCompile Include="src\components\Hello.test.tsx" />
+    <TypeScriptCompile Include="src\components\Hello.tsx" />
     <TypeScriptCompile Include="src\index.tsx" />
     <TypeScriptCompile Include="src\react-app-env.d.ts" />
     <TypeScriptCompile Include="src\serviceWorker.ts" />

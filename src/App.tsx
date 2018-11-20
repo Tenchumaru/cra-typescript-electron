@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Hello from './components/Hello';
 
 class App extends Component {
   private tesst = async () => {
@@ -24,6 +25,7 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <Hello name="George" enthusiasmLevel={5} />
       </div>
     );
   }
