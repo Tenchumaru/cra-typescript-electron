@@ -38,8 +38,8 @@ PORT=4349</Environment>
     <Content Include="public\manifest.json" />
     <Content Include="README.md" />
     <Content Include="README.txt" />
-    <Content Include="src\App.css" />
-    <Content Include="src\index.css" />
+    <Content Include="src\App.sass" />
+    <Content Include="src\index.sass" />
     <Content Include="src\logo.svg" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
