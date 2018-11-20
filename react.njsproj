@@ -30,7 +30,6 @@
     <Content Include="package.json" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
-    <Content Include="public\manifest.json" />
     <Content Include="README.md" />
     <Content Include="README.txt" />
     <Content Include="src\App.sass" />
@@ -45,7 +44,6 @@
     <TypeScriptCompile Include="src\components\Hello.tsx" />
     <TypeScriptCompile Include="src\index.tsx" />
     <TypeScriptCompile Include="src\react-app-env.d.ts" />
-    <TypeScriptCompile Include="src\serviceWorker.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\setupTests.js" />
