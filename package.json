@@ -28,13 +28,13 @@
     }
   },
   "homepage": ".",
-  "main": "public/electron.js",
   "scripts": {
-    "start": "cross-env BROWSER=none DEV_URL=http://localhost:4349 PORT=4349 node start.js",
+    "start": "yarn xpile && cross-env BROWSER=none DEV_URL=http://localhost:4349 PORT=4349 node start.js",
     "react-start": "cross-env PORT=4349 react-scripts start",
     "react-build": "react-scripts build",
     "electron-start": "wait-on http://localhost:4349 && electron .",
-    "electron-build": "electron-builder",
+    "electron-build": "yarn xpile && electron-builder",
+    "xpile": "tsc -p main",
     "test": "react-scripts test --watch --coverage",
     "release": "yarn react-build && yarn electron-build --publish=always",
     "build": "yarn react-build && yarn electron-build",
