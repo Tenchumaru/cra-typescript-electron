@@ -1,44 +1,24 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Create-React-App TypeScript Electron
 
-## Available Scripts
+This project demonstrates using a React front end in an Electron application with both that front end (i.e., the "renderer" process
+in Electron) and the Electron back end (i.e., the "main" process in Electron) implemented in TypeScript.  Also, the React front end
+has not been "ejected" so there is no explicit WebPack configuration (i.e., the React scripts control WebPack).
 
-In the project directory, you can run:
+Here is [the LinkedIn article](https://www.linkedin.com/pulse/notes-create-react-app-using-typescript-electron-chris-idzerda/)
+referencing this repository.  Here is [the command, with output](README.txt), that created this repository.  Here is [the React
+README](React.md) created as a result of that command.
 
-### `npm start`
+This project uses [yarn](https://yarnpkg.com) instead of NPM.  Since it is a command line tool, perform all references to executing
+`yarn` commands on the command line in the project directory.  After installing it, execute `yarn` without any arguments to
+initialize the project.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To run the tests in the project, execute `yarn test`.  Due to TypeScript compilation, it will take several seconds for the tests to
+start running.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+To run the project, execute `yarn start`.  If you're using Visual Studio, open [the solution file](cra-typescript-electron.sln) and
+follow [these debugging instructions](DEBUG.txt).
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+To build the project for release, execute `yarn build`.  This will place an installer in the `dist` directory.  You may check the
+build output before installation by executing `dist\win-unpacked\cra-typescript-electron.exe` (or double-clicking it in Windows
+Explorer).  Build errors are usually the result of updating the project.  Delete the `node_modules` directory and execute `yarn` to
+recreate it.
