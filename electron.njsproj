@@ -27,15 +27,17 @@ PORT=4349</Environment>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
-    <Compile Include="public\electron.js" />
     <Compile Include="start.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="public\" />
+    <Folder Include="main\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DEBUG.txt" />
-    <Content Include="package.json" />
+    <Content Include="DEBUG.md" />
+    <Content Include="main\tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="main\electron.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
