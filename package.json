@@ -28,6 +28,7 @@
     }
   },
   "homepage": ".",
+  "main": "build/electron.js",
   "scripts": {
     "start": "yarn xpile && cross-env BROWSER=none DEV_URL=http://localhost:4349 PORT=4349 node start.js",
     "react-start": "cross-env PORT=4349 react-scripts start",
