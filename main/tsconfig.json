@@ -3,6 +3,7 @@
     "outDir": "../build",
     "allowJs": true,
     "skipLibCheck": false,
+    "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
