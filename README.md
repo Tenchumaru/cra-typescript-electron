@@ -16,7 +16,7 @@ To run the tests in the project, execute `yarn test`.  Due to TypeScript compila
 start running.
 
 To run the project, execute `yarn start`.  If you're using Visual Studio, open [the solution file](cra-typescript-electron.sln) and
-follow [these debugging instructions](DEBUG.txt).
+follow [these debugging instructions](DEBUG.md).
 
 To build the project for release, execute `yarn build`.  This will place an installer in the `dist` directory.  You may check the
 build output before installation by executing `dist\win-unpacked\cra-typescript-electron.exe` (or double-clicking it in Windows
