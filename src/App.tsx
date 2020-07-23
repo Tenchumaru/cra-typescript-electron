@@ -4,10 +4,6 @@ import './App.sass';
 import Hello from './components/Hello';
 
 class App extends Component {
-  private tesst = async () => {
-    await fetch('');
-  }
-
   render() {
     return (
       <div className="App">
