@@ -2,15 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-
-declare global {
-  interface Window {
-    main: {
-      request: (data: {}) => void;
-      onResponse: (fn: Function) => void;
-    },
-  }
-}
+import { showMessageBox } from './main';
 
 interface State {
   result?: number;
@@ -46,6 +38,6 @@ export class App extends React.Component<{}, State> {
   }
 
   private showMessageBox = () => {
-    window.main.request({ kind: 'showMessageBox', message: 'Hello from renderer process' });
+    showMessageBox('Hello from renderer process');
   }
 }
