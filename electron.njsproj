@@ -34,6 +34,9 @@ PORT=4349</Environment>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DEBUG.md" />
+    <Content Include="main\preload.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="main\tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />

@@ -1,15 +1,58 @@
 // Modules to control application life and create native browser window
 import { join } from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import { format, parse } from 'url';
+
+interface MessageBoxOptions {
+  kind: 'showMessageBox';
+  buttons?: string[];
+  message: string;
+  title?: string;
+  type?: 'none' | 'info' | 'error' | 'question' | 'warning';
+}
+
+interface OpenDialogOptions {
+  kind: 'showOpenDialog';
+  defaultPath?: string;
+  title?: string;
+}
+
+interface SaveDialogOptions {
+  kind: 'showSaveDialog';
+  defaultPath?: string;
+  title?: string;
+}
+
+type Request = MessageBoxOptions | OpenDialogOptions | SaveDialogOptions;
 
 // Keep a global reference of the window object otherwise the window will
 // be closed automatically when the JavaScript object is garbage-collected.
 let mainWindow: Electron.BrowserWindow | undefined;
 
+ipcMain.on('request', async (_event, request: Request) => {
+  let response: number | string | undefined;
+  switch (request.kind) {
+    case 'showMessageBox':
+      const a = await dialog.showMessageBox(mainWindow!, request);
+      response = a.response;
+      break;
+    case 'showOpenDialog':
+      const b = await dialog.showOpenDialog(mainWindow!, request);
+      response = b.filePaths[0];
+      break;
+    case 'showSaveDialog':
+      const c = await dialog.showSaveDialog(mainWindow!, request);
+      response = c.filePath;
+      break;
+  }
+  mainWindow!.webContents.send('response', response);
+});
+
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  const preload = join(__dirname, 'preload.js');
+  const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
+  mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences });
 
   // Load the index.html of the app.
   mainWindow.loadURL(composeApplicationUrl());
