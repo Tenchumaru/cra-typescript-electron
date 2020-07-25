@@ -34,9 +34,6 @@ PORT=4349</Environment>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DEBUG.md" />
-    <Content Include="main\preload.js">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="main\tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -44,6 +41,7 @@ PORT=4349</Environment>
   <ItemGroup>
     <TypeScriptCompile Include="main\api.ts" />
     <TypeScriptCompile Include="main\electron.ts" />
+    <TypeScriptCompile Include="main\preload.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
