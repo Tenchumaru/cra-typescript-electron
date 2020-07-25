@@ -11,10 +11,6 @@ interface State {
 export class App extends React.Component<{}, State> {
   state: State = {}
 
-  componentDidMount() {
-    window.main.onResponse(this.onMainResponse);
-  }
-
   render() {
     const { result } = this.state;
     return (
@@ -33,11 +29,8 @@ export class App extends React.Component<{}, State> {
     );
   }
 
-  private onMainResponse = (result: number) => {
+  private showMessageBox = async () => {
+    const result = await showMessageBox('Hello from renderer process');
     this.setState({ result });
-  }
-
-  private showMessageBox = () => {
-    showMessageBox('Hello from renderer process');
   }
 }
