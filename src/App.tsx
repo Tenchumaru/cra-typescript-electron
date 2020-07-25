@@ -30,7 +30,7 @@ export class App extends React.Component<{}, State> {
   }
 
   private showMessageBox = async () => {
-    const result = await showMessageBox('Hello from renderer process');
+    const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
     this.setState({ result });
   }
 }

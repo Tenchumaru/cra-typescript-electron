@@ -1,11 +1,13 @@
+export type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
+
 declare global {
   interface Window {
     main: {
-      request: (data: {}) => Promise<any>;
+      showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType) => Promise<number>;
     },
   }
 }
 
-export async function showMessageBox(message: string): Promise<number> {
-  return window.main.request({ kind: 'showMessageBox', message });
+export async function showMessageBox(message: string, buttons?: string[], title?: string, type?: MessageBoxType): Promise<number> {
+  return window.main.showMessageBox(message, buttons, title, type);
 }
