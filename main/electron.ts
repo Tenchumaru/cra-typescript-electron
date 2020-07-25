@@ -1,61 +1,21 @@
 // Modules to control application life and create native browser window
 import { join } from 'path';
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { format, parse } from 'url';
-
-interface MessageBoxOptions {
-  kind: 'showMessageBox';
-  buttons?: string[];
-  message: string;
-  title?: string;
-  type?: 'none' | 'info' | 'error' | 'question' | 'warning';
-}
-
-interface OpenDialogOptions {
-  kind: 'showOpenDialog';
-  defaultPath?: string;
-  title?: string;
-}
-
-interface SaveDialogOptions {
-  kind: 'showSaveDialog';
-  defaultPath?: string;
-  title?: string;
-}
-
-type Request = MessageBoxOptions | OpenDialogOptions | SaveDialogOptions;
+import { configure } from './api';
 
 // Keep a global reference of the window object otherwise the window will
 // be closed automatically when the JavaScript object is garbage-collected.
 let mainWindow: Electron.BrowserWindow | undefined;
-
-ipcMain.on('request', async (_event, request: Request) => {
-  let response: number | string | undefined;
-  switch (request.kind) {
-    case 'showMessageBox':
-      delete request.kind;
-      const a = await dialog.showMessageBox(mainWindow!, request);
-      response = a.response;
-      break;
-    case 'showOpenDialog':
-      delete request.kind;
-      const b = await dialog.showOpenDialog(mainWindow!, request);
-      response = b.filePaths[0];
-      break;
-    case 'showSaveDialog':
-      delete request.kind;
-      const c = await dialog.showSaveDialog(mainWindow!, request);
-      response = c.filePath;
-      break;
-  }
-  mainWindow!.webContents.send('response', response);
-});
 
 function createWindow() {
   // Create the browser window.
   const preload = join(__dirname, 'preload.js');
   const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
   mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences });
+
+  // Configure the api with the main window.
+  configure(mainWindow);
 
   // Load the index.html of the app.
   mainWindow.loadURL(composeApplicationUrl());
