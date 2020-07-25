@@ -4,6 +4,12 @@ contextBridge.exposeInMainWorld('main', {
   showMessageBox: (message, buttons, title, type) => {
     return request({ kind: 'showMessageBox', buttons, message, title, type });
   },
+  showOpenDialog: (defaultPath, title) => {
+    return request({ kind: 'showOpenDialog', defaultPath, title });
+  },
+  showSaveDialog: (defaultPath, title) => {
+    return request({ kind: 'showSaveDialog', defaultPath, title });
+  },
 });
 
 function request(request) {

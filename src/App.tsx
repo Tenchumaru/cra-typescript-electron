@@ -2,10 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { showMessageBox } from './main';
+import { showMessageBox, showOpenDialog, showSaveDialog } from './main';
 
 interface State {
-  result?: number;
+  result?: number | string;
 }
 
 export class App extends React.Component<{}, State> {
@@ -24,6 +24,8 @@ export class App extends React.Component<{}, State> {
         </header>
         <Hello name="George" enthusiasmLevel={5} />
         <button onClick={this.showMessageBox}>Show Message Box</button>
+        <button onClick={this.showOpenDialog}>Show Open Dialog</button>
+        <button onClick={this.showSaveDialog}>Show Save Dialog</button>
         <p>{result}</p>
       </div>
     );
@@ -31,6 +33,16 @@ export class App extends React.Component<{}, State> {
 
   private showMessageBox = async () => {
     const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
+    this.setState({ result });
+  }
+
+  private showOpenDialog = async () => {
+    const result = await showOpenDialog();
+    this.setState({ result });
+  }
+
+  private showSaveDialog = async () => {
+    const result = await showSaveDialog();
     this.setState({ result });
   }
 }
