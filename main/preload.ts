@@ -1,8 +1,7 @@
-import { contextBridge, ipcRenderer, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
+import { Request } from './request';
 
 type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
-type WithKind<T, K> = T & { kind: K; };
-type Request = WithKind<MessageBoxOptions, 'showMessageBox'> | WithKind<OpenDialogOptions, 'showOpenDialog'> | WithKind<SaveDialogOptions, 'showSaveDialog'>;
 
 contextBridge.exposeInMainWorld('main', {
   showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType): Promise<number> => {

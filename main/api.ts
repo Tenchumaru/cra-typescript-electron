@@ -1,7 +1,5 @@
-import { BrowserWindow, ipcMain, dialog, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
-
-type WithKind<T, K> = T & { kind: K; };
-type Request = WithKind<MessageBoxOptions, 'showMessageBox'> | WithKind<OpenDialogOptions, 'showOpenDialog'> | WithKind<SaveDialogOptions, 'showSaveDialog'>;
+import { BrowserWindow, ipcMain, dialog } from 'electron';
+import { Request } from './request';
 
 export function configure(window: BrowserWindow) {
   ipcMain.removeAllListeners('request');
