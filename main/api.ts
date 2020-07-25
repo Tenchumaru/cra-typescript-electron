@@ -10,18 +10,15 @@ export function configure(window: BrowserWindow) {
     switch (request.kind) {
       case 'showMessageBox':
         delete request.kind;
-        const a = await dialog.showMessageBox(window, request);
-        response = a.response;
+        response = (await dialog.showMessageBox(window, request)).response;
         break;
       case 'showOpenDialog':
         delete request.kind;
-        const b = await dialog.showOpenDialog(window, request);
-        response = b.filePaths[0];
+        response = (await dialog.showOpenDialog(window, request)).filePaths[0];
         break;
       case 'showSaveDialog':
         delete request.kind;
-        const c = await dialog.showSaveDialog(window, request);
-        response = c.filePath;
+        response = (await dialog.showSaveDialog(window, request)).filePath;
         break;
     }
     window.webContents.send('response', response);
