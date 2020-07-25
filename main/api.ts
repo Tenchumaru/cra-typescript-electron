@@ -1,26 +1,7 @@
-import { BrowserWindow, ipcMain, dialog } from 'electron';
+import { BrowserWindow, ipcMain, dialog, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
 
-interface MessageBoxOptions {
-  kind: 'showMessageBox';
-  buttons?: string[];
-  message: string;
-  title?: string;
-  type?: 'none' | 'info' | 'error' | 'question' | 'warning';
-}
-
-interface OpenDialogOptions {
-  kind: 'showOpenDialog';
-  defaultPath?: string;
-  title?: string;
-}
-
-interface SaveDialogOptions {
-  kind: 'showSaveDialog';
-  defaultPath?: string;
-  title?: string;
-}
-
-type Request = MessageBoxOptions | OpenDialogOptions | SaveDialogOptions;
+type WithKind<T, K> = T & { kind: K; };
+type Request = WithKind<MessageBoxOptions, 'showMessageBox'> | WithKind<OpenDialogOptions, 'showOpenDialog'> | WithKind<SaveDialogOptions, 'showSaveDialog'>;
 
 export function configure(window: BrowserWindow) {
   ipcMain.removeAllListeners('request');
