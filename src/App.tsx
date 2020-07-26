@@ -2,10 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { readFile, showMessageBox, showOpenDialog, showSaveDialog } from './main';
+import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile } from './main';
 
 interface State {
-  result?: number | string;
+  result?: string;
 }
 
 export class App extends React.Component<{}, State> {
@@ -27,6 +27,7 @@ export class App extends React.Component<{}, State> {
         <button onClick={this.showMessageBox}>Show Message Box</button>
         <button onClick={this.showOpenDialog}>Show Open Dialog</button>
         <button onClick={this.showSaveDialog}>Show Save Dialog</button>
+        <button onClick={this.writeFile}>Write File</button>
         <br />
         <textarea onChange={this.onChange} value={result} />
       </div>
@@ -48,7 +49,7 @@ export class App extends React.Component<{}, State> {
 
   private showMessageBox = async () => {
     const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
-    this.setState({ result });
+    this.setState({ result: `Button at position ${result} pressed` });
   }
 
   private showOpenDialog = async () => {
@@ -59,5 +60,14 @@ export class App extends React.Component<{}, State> {
   private showSaveDialog = async () => {
     const result = await showSaveDialog();
     this.setState({ result });
+  }
+
+  private writeFile = async () => {
+    if (this.state.result) {
+      const filePath = await showSaveDialog();
+      if (filePath) {
+        await writeFile(filePath, this.state.result);
+      }
+    }
   }
 }

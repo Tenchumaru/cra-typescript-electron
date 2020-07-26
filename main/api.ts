@@ -1,5 +1,6 @@
 import { BrowserWindow, ipcMain, dialog } from 'electron';
 import fs from 'fs';
+import { EOL } from 'os';
 import { Request } from './request';
 
 export function configure(window: BrowserWindow) {
@@ -23,7 +24,7 @@ export function configure(window: BrowserWindow) {
         response = (await dialog.showSaveDialog(window, request)).filePath;
         break;
       case 'writeFile':
-        writeFile(request.filePath, request.data);
+        writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
         break;
     }
     window.webContents.send('response', response);
