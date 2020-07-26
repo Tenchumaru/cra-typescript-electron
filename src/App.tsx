@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { showMessageBox, showOpenDialog, showSaveDialog } from './main';
+import { readFile, showMessageBox, showOpenDialog, showSaveDialog } from './main';
 
 interface State {
   result?: number | string;
@@ -23,12 +23,27 @@ export class App extends React.Component<{}, State> {
           <a className="App__link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a>
         </header>
         <Hello name="George" enthusiasmLevel={5} />
+        <button onClick={this.readFile}>Read File</button>
         <button onClick={this.showMessageBox}>Show Message Box</button>
         <button onClick={this.showOpenDialog}>Show Open Dialog</button>
         <button onClick={this.showSaveDialog}>Show Save Dialog</button>
-        <p>{result}</p>
+        <br />
+        <textarea onChange={this.onChange} value={result} />
       </div>
     );
+  }
+
+  private onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const result = event.currentTarget.value;
+    this.setState({ result });
+  }
+
+  private readFile = async () => {
+    const filePath = await showOpenDialog();
+    if (filePath) {
+      const result = await readFile(filePath);
+      this.setState({ result });
+    }
   }
 
   private showMessageBox = async () => {

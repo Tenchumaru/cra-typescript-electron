@@ -4,6 +4,9 @@ import { Request } from './request';
 type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
 
 contextBridge.exposeInMainWorld('main', {
+  readFile: (filePath: string): Promise<string> => {
+    return request({ kind: 'readFile', filePath });
+  },
   showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType): Promise<number> => {
     return request({ kind: 'showMessageBox', buttons, message, title, type });
   },
@@ -12,6 +15,9 @@ contextBridge.exposeInMainWorld('main', {
   },
   showSaveDialog: (defaultPath?: string, title?: string): Promise<string | undefined> => {
     return request({ kind: 'showSaveDialog', defaultPath, title });
+  },
+  writeFile: (filePath: string, data: string): Promise<void> => {
+    return request({ kind: 'writeFile', filePath, data });
   },
 });
 
