@@ -9,28 +9,32 @@ export function configure(window: BrowserWindow) {
 }
 
 async function fulfillRequest(window: BrowserWindow, request: Request) {
-  let response: number | string | undefined;
-  switch (request.kind) {
-    case 'readFile':
-      response = await readFile(request.filePath);
-      break;
-    case 'showMessageBox':
-      delete request.kind;
-      response = (await dialog.showMessageBox(window, request)).response;
-      break;
-    case 'showOpenDialog':
-      delete request.kind;
-      response = (await dialog.showOpenDialog(window, request)).filePaths[0];
-      break;
-    case 'showSaveDialog':
-      delete request.kind;
-      response = (await dialog.showSaveDialog(window, request)).filePath;
-      break;
-    case 'writeFile':
-      writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
-      break;
+  try {
+    let response: number | string | undefined;
+    switch (request.kind) {
+      case 'readFile':
+        response = await readFile(request.filePath);
+        break;
+      case 'showMessageBox':
+        delete request.kind;
+        response = (await dialog.showMessageBox(window, request)).response;
+        break;
+      case 'showOpenDialog':
+        delete request.kind;
+        response = (await dialog.showOpenDialog(window, request)).filePaths[0];
+        break;
+      case 'showSaveDialog':
+        delete request.kind;
+        response = (await dialog.showSaveDialog(window, request)).filePath;
+        break;
+      case 'writeFile':
+        await writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
+        break;
+    }
+    window.webContents.send('response', response);
+  } catch (ex) {
+    window.webContents.send('response', undefined, ex);
   }
-  window.webContents.send('response', response);
 }
 
 function readFile(filePath: string): Promise<string> {

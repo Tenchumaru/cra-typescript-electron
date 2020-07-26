@@ -40,33 +40,53 @@ export class App extends React.Component<{}, State> {
   }
 
   private readFile = async () => {
-    const filePath = await showOpenDialog();
-    if (filePath) {
-      const result = await readFile(filePath);
-      this.setState({ result });
+    try {
+      const filePath = await showOpenDialog();
+      if (filePath) {
+        const result = await readFile(filePath);
+        this.setState({ result });
+      }
+    } catch (ex) {
+      this.setState({ result: ex.message });
     }
   }
 
   private showMessageBox = async () => {
-    const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
-    this.setState({ result: `Button at position ${result} pressed` });
+    try {
+      const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
+      this.setState({ result: `Button at position ${result} pressed` });
+    } catch (ex) {
+      this.setState({ result: ex.message });
+    }
   }
 
   private showOpenDialog = async () => {
-    const result = await showOpenDialog();
-    this.setState({ result });
+    try {
+      const result = await showOpenDialog();
+      this.setState({ result });
+    } catch (ex) {
+      this.setState({ result: ex.message });
+    }
   }
 
   private showSaveDialog = async () => {
-    const result = await showSaveDialog();
-    this.setState({ result });
+    try {
+      const result = await showSaveDialog();
+      this.setState({ result });
+    } catch (ex) {
+      this.setState({ result: ex.message });
+    }
   }
 
   private writeFile = async () => {
     if (this.state.result) {
-      const filePath = await showSaveDialog();
-      if (filePath) {
-        await writeFile(filePath, this.state.result);
+      try {
+        const filePath = await showSaveDialog();
+        if (filePath) {
+          await writeFile(filePath, this.state.result);
+        }
+      } catch (ex) {
+        this.setState({ result: ex.message });
       }
     }
   }

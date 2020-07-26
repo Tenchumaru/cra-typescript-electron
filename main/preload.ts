@@ -23,8 +23,14 @@ contextBridge.exposeInMainWorld('main', {
 
 function request<T>(request: Request): Promise<T> {
   ipcRenderer.send('request', request);
-  return new Promise<T>((resolve, _reject) => {
+  return new Promise<T>((resolve, reject) => {
     // Do not include the event since it includes the sender.
-    ipcRenderer.once('response', (_event, response) => resolve(response));
+    ipcRenderer.once('response', (_event, response, ex: Error) => {
+      if (ex) {
+        reject(ex);
+      } else {
+        resolve(response);
+      }
+    });
   });
 }
