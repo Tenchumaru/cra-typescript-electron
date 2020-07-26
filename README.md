@@ -19,6 +19,6 @@ To run the project, execute `yarn start`.  If you're using Visual Studio, open [
 follow [these debugging instructions](DEBUG.md).
 
 To build the project for release, execute `yarn build`.  This will place an installer in the `dist` directory.  You may check the
-build output before installation by executing `dist\win-unpacked\cra-typescript-electron.exe` (or double-clicking it in Windows
+build output before installation by executing `"dist\win-unpacked\CRA Typescript Electron.exe"` (or double-clicking it in Windows
 Explorer).  Build errors are usually the result of updating the project.  Delete the `node_modules` directory and execute `yarn` to
 recreate it.

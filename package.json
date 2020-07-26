@@ -14,6 +14,7 @@
     "typescript": "^3.9.7"
   },
   "build": {
+    "productName": "CRA Typescript Electron",
     "appId": "com.example.cra-typescript-electron",
     "extends": "react-cra",
     "mac": {
