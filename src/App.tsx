@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
-import Hello from './components/Hello';
+import { Hello } from './components/Hello';
 
-class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -19,5 +19,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
