@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { mount, shallow } from 'enzyme';
 import { Hello } from './Hello';
-import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -10,5 +10,9 @@ it('renders without crashing', () => {
 });
 
 it('shallow-renders without crashing', () => {
-  const wrapper = shallow(<Hello name="test" />);
+  shallow(<Hello name="test" />);
+});
+
+it('mounts without crashing', () => {
+  mount(<Hello name="test" />);
 });
