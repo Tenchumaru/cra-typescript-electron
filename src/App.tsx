@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile } from './main';
+import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse } from './main';
 
 interface State {
   result?: string;
@@ -10,6 +10,7 @@ interface State {
 
 export class App extends React.Component<{}, State> {
   state: State = {}
+  private value: number = 0;
 
   render() {
     const { result } = this.state;
@@ -28,6 +29,8 @@ export class App extends React.Component<{}, State> {
         <button onClick={this.showOpenDialog}>Show Open Dialog</button>
         <button onClick={this.showSaveDialog}>Show Save Dialog</button>
         <button onClick={this.writeFile}>Write File</button>
+        <button onClick={this.testDelayResponse}>Test Delay Response</button>
+        <button onClick={this.fiveSeconds}>Five Seconds</button>
         <br />
         <textarea onChange={this.onChange} value={result} />
       </div>
@@ -36,6 +39,23 @@ export class App extends React.Component<{}, State> {
 
   private onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const result = event.currentTarget.value;
+    this.setState({ result });
+  }
+
+  private fiveSeconds = async () => {
+    ++this.value;
+    const result = await delayResponse(5555, this.value.toString());
+    this.setState({ result });
+  }
+
+  private testDelayResponse = async () => {
+    const response5 = delayResponse(5555, 'five');
+    const response4 = delayResponse(4444, 'four');
+    const response3 = delayResponse(3333, 'three');
+    const response2 = delayResponse(2222, 'two');
+    const response1 = delayResponse(1111, 'one');
+    const responses = await Promise.all([response1, response2, response3, response4, response5]);
+    const result = `one is ${responses[0]}\ntwo is ${responses[1]}\nthree is ${responses[2]}\nfour is ${responses[3]}\nfive is ${responses[4]}`;
     this.setState({ result });
   }
 

@@ -5,13 +5,21 @@ import { Request } from './request';
 
 export function configure(window: BrowserWindow) {
   ipcMain.removeAllListeners('request');
-  ipcMain.on('request', (_event, request: Request) => fulfillRequest(window, request));
+  ipcMain.on('request', (_event, id: number, request: Request) => fulfillRequest(window, id, request));
 }
 
-async function fulfillRequest(window: BrowserWindow, request: Request) {
+async function fulfillRequest(window: BrowserWindow, id: number, request: Request) {
   try {
     let response: number | string | undefined;
     switch (request.kind) {
+      case 'delayResponse':
+        console.log('received delayResponse:', request.duration, request.value);
+        await new Promise<void>((resolve) => {
+          setTimeout(resolve, request.duration);
+        });
+        console.log('responding to delayResponse:', request.value);
+        response = request.value;
+        break;
       case 'readFile':
         response = await readFile(request.filePath);
         break;
@@ -31,9 +39,9 @@ async function fulfillRequest(window: BrowserWindow, request: Request) {
         await writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
         break;
     }
-    window.webContents.send('response', response);
+    window.webContents.send('response', id, response);
   } catch (ex) {
-    window.webContents.send('response', undefined, ex);
+    window.webContents.send('response', id, undefined, ex);
   }
 }
 

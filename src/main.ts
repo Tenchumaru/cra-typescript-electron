@@ -3,6 +3,7 @@ export type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
 declare global {
   interface Window {
     main: {
+      delayResponse: (duration: number, value: string) => Promise<string>;
       readFile: (filePath: string) => Promise<string>;
       showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType) => Promise<number>;
       showOpenDialog: (defaultPath?: string, title?: string) => Promise<string | undefined>;
@@ -10,6 +11,10 @@ declare global {
       writeFile: (filePath: string, data: string) => Promise<void>;
     },
   }
+}
+
+export async function delayResponse(duration: number, value: string): Promise<string> {
+  return window.main.delayResponse(duration, value);
 }
 
 export async function readFile(filePath: string): Promise<string> {
