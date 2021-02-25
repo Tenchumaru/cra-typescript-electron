@@ -2,6 +2,7 @@
 import { join } from 'path';
 import { app, BrowserWindow } from 'electron';
 import { format, parse } from 'url';
+import { configure } from './api';
 
 // Keep a global reference of the window object otherwise the window will
 // be closed automatically when the JavaScript object is garbage-collected.
@@ -9,7 +10,12 @@ let mainWindow: Electron.BrowserWindow | undefined;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  const preload = join(__dirname, 'preload.js');
+  const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
+  mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences });
+
+  // Configure the api with the main window.
+  configure(mainWindow);
 
   // Load the index.html of the app.
   mainWindow.loadURL(composeApplicationUrl());

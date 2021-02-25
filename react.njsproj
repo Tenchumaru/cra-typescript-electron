@@ -44,6 +44,7 @@
     <TypeScriptCompile Include="src\components\Hello.test.tsx" />
     <TypeScriptCompile Include="src\components\Hello.tsx" />
     <TypeScriptCompile Include="src\index.tsx" />
+    <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\react-app-env.d.ts" />
   </ItemGroup>
   <ItemGroup>
