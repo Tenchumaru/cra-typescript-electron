@@ -35,8 +35,6 @@ PORT=4349</Environment>
   <ItemGroup>
     <Content Include="DEBUG.md" />
     <Content Include="main\tsconfig.json" />
-    <Content Include="package.json" />
-    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="main\api.ts" />
