@@ -2,7 +2,7 @@
 import { join } from 'path';
 import { app, BrowserWindow } from 'electron';
 import { format, parse } from 'url';
-import { configure } from './api';
+import { setActiveWindow } from './api';
 
 // Keep a global reference of the window object otherwise the window will
 // be closed automatically when the JavaScript object is garbage-collected.
@@ -13,9 +13,6 @@ function createWindow() {
   const preload = join(__dirname, 'preload.js');
   const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
   mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences });
-
-  // Configure the api with the main window.
-  configure(mainWindow);
 
   // Load the index.html of the app.
   mainWindow.loadURL(composeApplicationUrl());
@@ -29,6 +26,11 @@ function createWindow() {
     // array if your app supports multi windows, this is the time when you
     // should delete the corresponding element.
     mainWindow = undefined;
+  });
+
+  // Emitted when the window gains focus.
+  mainWindow.on('focus', function () {
+    setActiveWindow(mainWindow!);
   });
 
   // Test Web request overriding.

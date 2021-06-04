@@ -3,12 +3,15 @@ import fs from 'fs';
 import { EOL } from 'os';
 import { Request } from './request';
 
-export function configure(window: BrowserWindow) {
-  ipcMain.removeAllListeners('request');
-  ipcMain.on('request', (_event, id: number, request: Request) => fulfillRequest(window, id, request));
+let activeWindow: BrowserWindow;
+
+ipcMain.on('request', fulfillRequest);
+
+export function setActiveWindow(window: BrowserWindow) {
+  activeWindow = window;
 }
 
-async function fulfillRequest(window: BrowserWindow, id: number, request: Request) {
+async function fulfillRequest(event: Electron.IpcMainEvent, id: number, request: Request) {
   try {
     let response: number | string | undefined;
     switch (request.kind) {
@@ -25,23 +28,23 @@ async function fulfillRequest(window: BrowserWindow, id: number, request: Reques
         break;
       case 'showMessageBox':
         delete request.kind;
-        response = (await dialog.showMessageBox(window, request)).response;
+        response = (await dialog.showMessageBox(activeWindow, request)).response;
         break;
       case 'showOpenDialog':
         delete request.kind;
-        response = (await dialog.showOpenDialog(window, request)).filePaths[0];
+        response = (await dialog.showOpenDialog(activeWindow, request)).filePaths[0];
         break;
       case 'showSaveDialog':
         delete request.kind;
-        response = (await dialog.showSaveDialog(window, request)).filePath;
+        response = (await dialog.showSaveDialog(activeWindow, request)).filePath;
         break;
       case 'writeFile':
         await writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
         break;
     }
-    window.webContents.send('response', id, response);
+    event.reply('response', id, response);
   } catch (ex) {
-    window.webContents.send('response', id, undefined, ex);
+    event.reply('response', id, undefined, ex);
   }
 }
 
