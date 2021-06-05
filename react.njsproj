@@ -27,11 +27,9 @@
     <Folder Include="src\components\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="package.json" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
     <Content Include="React.md" />
-    <Content Include="README.md" />
     <Content Include="README.txt" />
     <Content Include="src\App.sass" />
     <Content Include="src\index.sass" />

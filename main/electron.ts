@@ -1,52 +1,65 @@
 // Modules to control application life and create native browser window
 import { join } from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
 import { format, parse } from 'url';
-import { configure } from './api';
+import { setActiveWindow } from './api';
 
-// Keep a global reference of the window object otherwise the window will
-// be closed automatically when the JavaScript object is garbage-collected.
-let mainWindow: Electron.BrowserWindow | undefined;
+// Keep references to all window objects so they aren't garbage-collected.
+const windows: Electron.BrowserWindow[] = [];
 
 function createWindow() {
   // Create the browser window.
   const preload = join(__dirname, 'preload.js');
   const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
-  mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences });
+  const window = new BrowserWindow({ width: 800, height: 600, webPreferences });
 
-  // Configure the api with the main window.
-  configure(mainWindow);
+  // Check the current application menu.
+  const menu = Menu.getApplicationMenu();
+  if (menu) {
+    const submenu = menu.items[process.platform === 'darwin' ? 1 : 0].submenu!;
+    if (submenu.items.length < 2) {
+      // Add the "New Window" command to the application "File" menu.
+      submenu.insert(0, new MenuItem({ click: createWindow, label: '&New Window', accelerator: 'CommandOrControl+N' }));
+      Menu.setApplicationMenu(menu);
+
+      // Test Web request overriding.
+      session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+        const url = parse(details.url);
+        if (url.hostname === 'localhost' && url.protocol === 'https:') {
+          callback({ redirectURL: 'http://httpbin.org/get' });
+        } else if (url.hostname && url.hostname.startsWith('localhost.test') && url.hash) {
+          callback({ redirectURL: composeApplicationUrl() + url.hash });
+        } else {
+          callback({});
+        }
+      });
+
+      // Set the "X-Requested-With" header of all requests.
+      session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+        details.requestHeaders['X-Requested-With'] = `cra-typescript-electron; ${app.getVersion()}`;
+        callback({ requestHeaders: details.requestHeaders });
+      });
+    }
+  }
 
   // Load the index.html of the app.
-  mainWindow.loadURL(composeApplicationUrl());
+  window.loadURL(composeApplicationUrl());
 
   // Open the Chromium Development Tools.
-  // mainWindow.webContents.openDevTools();
+  // window.webContents.openDevTools();
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows in an
-    // array if your app supports multi windows, this is the time when you
-    // should delete the corresponding element.
-    mainWindow = undefined;
+  window.on('closed', function() {
+    // Remove the window from the collection.
+    windows.splice(0, windows.length, ...windows.filter((e) => e !== window));
   });
 
-  // Test Web request overriding.
-  const { session } = require('electron');
-  session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
-    const url = parse(details.url);
-    if (url.hostname === 'localhost' && url.protocol === 'https:') {
-      callback({ redirectURL: 'http://httpbin.org/get' });
-    } else if (url.hostname && url.hostname.startsWith('localhost.test') && url.hash) {
-      callback({ redirectURL: composeApplicationUrl() + url.hash });
-    } else {
-      callback({});
-    }
+  // Emitted when the window gains focus.
+  window.on('focus', function() {
+    setActiveWindow(window!);
   });
-  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders['X-Requested-With'] = `cra-typescript-electron; ${app.getVersion()}`;
-    callback({ requestHeaders: details.requestHeaders });
-  });
+
+  windows.push(window);
 
   function composeApplicationUrl() {
     // tslint:disable:object-literal-sort-keys
@@ -84,7 +97,7 @@ app.on('window-all-closed', function() {
 app.on('activate', function() {
   // On OS X it's common to re-create a window in the app when the dock icon
   // is clicked and there are no other windows open.
-  if (!mainWindow) {
+  if (!windows.length) {
     createWindow();
   }
 });

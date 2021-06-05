@@ -15,10 +15,10 @@ initialize the project.
 To run the tests in the project, execute `yarn test`.  Due to TypeScript compilation, it will take several seconds for the tests to
 start running.
 
-To run the project, execute `yarn start`.  If you're using Visual Studio, open [the solution file](cra-typescript-electron.sln) and
-follow [these debugging instructions](DEBUG.md).
+To run the project, execute `yarn start`.  If you'd like to debug the application using Visual Studio 2017 or above on Windows,
+open [the solution file](cra-typescript-electron.sln) and follow [these debugging instructions](DEBUG.md).
 
-To build the project for release, execute `yarn build`.  This will place an installer in the `dist` directory.  You may check the
-build output before installation by executing `"dist\win-unpacked\CRA Typescript Electron.exe"` (or double-clicking it in Windows
-Explorer).  Build errors are usually the result of updating the project.  Delete the `node_modules` directory and execute `yarn` to
-recreate it.
+To build the project for release, execute `yarn build`.  This will create both the app and an installer (`.exe` for Windows and
+`.dmg` for macOS) in the `dist` directory.  The app is in a subdirectory (`dist\win-unpacked` for Windows and `dist/mac/CRA
+TypeScript Electron.app/Contents/MacOS` for macOS).  Build errors are usually the result of updating the project.  Delete the
+`node_modules` directory and execute `yarn` to recreate it.
