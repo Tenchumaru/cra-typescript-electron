@@ -10,7 +10,7 @@ README](React.md) created as a result of that command.
 
 This project uses [yarn](https://yarnpkg.com) instead of NPM.  Since it is a command line tool, perform all references to executing
 `yarn` commands on the command line in the project directory.  After installing it, execute `yarn` without any arguments to
-initialize the project.
+initialize the project.  If you have Node installed, it must be at least version 14.
 
 To run the tests in the project, execute `yarn test`.  Due to TypeScript compilation, it will take several seconds for the tests to
 start running.
