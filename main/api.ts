@@ -61,12 +61,12 @@ function readFile(filePath: string): Promise<string> {
 }
 
 function writeFile(filePath: string, data: string): Promise<void> {
-  return new Promise<void>((resove, reject) => {
+  return new Promise<void>((resolve, reject) => {
     fs.writeFile(filePath, data, { encoding: 'utf8' }, (ex) => {
       if (ex) {
         reject(ex);
       } else {
-        resove();
+        resolve();
       }
     });
   });
