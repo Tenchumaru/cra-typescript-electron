@@ -61,7 +61,7 @@ function createWindow() {
 
   windows.push(window);
 
-  function composeApplicationUrl() {
+  function composeApplicationUrl(): string {
     // tslint:disable:object-literal-sort-keys
     const query = {
       this: 1,
