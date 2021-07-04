@@ -5,7 +5,7 @@ import { format, parse } from 'url';
 import { setActiveWindow } from './api';
 
 // Keep references to all window objects so they aren't garbage-collected.
-const windows: Electron.BrowserWindow[] = [];
+const windows: BrowserWindow[] = [];
 
 function createWindow() {
   // Create the browser window.

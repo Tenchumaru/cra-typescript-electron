@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, dialog } from 'electron';
+import { IpcMainEvent, BrowserWindow, ipcMain, dialog } from 'electron';
 import fs from 'fs';
 import { EOL } from 'os';
 import { Request } from './request';
@@ -11,7 +11,7 @@ export function setActiveWindow(window: BrowserWindow) {
   activeWindow = window;
 }
 
-async function fulfillRequest(event: Electron.IpcMainEvent, id: number, request: Request) {
+async function fulfillRequest(event: IpcMainEvent, id: number, request: Request) {
   try {
     let response: number | string | undefined;
     switch (request.kind) {
