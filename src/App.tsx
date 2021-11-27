@@ -66,7 +66,7 @@ export class App extends React.Component<{}, State> {
         const result = await readFile(filePath);
         this.setState({ result });
       }
-    } catch (ex) {
+    } catch (ex: any) {
       this.setState({ result: ex.message });
     }
   }
@@ -75,7 +75,7 @@ export class App extends React.Component<{}, State> {
     try {
       const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
       this.setState({ result: `Button at position ${result} pressed` });
-    } catch (ex) {
+    } catch (ex: any) {
       this.setState({ result: ex.message });
     }
   }
@@ -84,7 +84,7 @@ export class App extends React.Component<{}, State> {
     try {
       const result = await showOpenDialog();
       this.setState({ result });
-    } catch (ex) {
+    } catch (ex: any) {
       this.setState({ result: ex.message });
     }
   }
@@ -93,7 +93,7 @@ export class App extends React.Component<{}, State> {
     try {
       const result = await showSaveDialog();
       this.setState({ result });
-    } catch (ex) {
+    } catch (ex: any) {
       this.setState({ result: ex.message });
     }
   }
@@ -105,7 +105,7 @@ export class App extends React.Component<{}, State> {
         if (filePath) {
           await writeFile(filePath, this.state.result);
         }
-      } catch (ex) {
+      } catch (ex: any) {
         this.setState({ result: ex.message });
       }
     }

@@ -1,8 +1,8 @@
 # Create-React-App TypeScript Electron
 
-This project demonstrates using a React front end in an Electron application with both that front end (i.e., the "renderer" process
-in Electron) and the Electron back end (i.e., the "main" process in Electron) implemented in TypeScript.  Also, the React front end
-has not been "ejected" so there is no explicit WebPack configuration (i.e., the React scripts control WebPack).
+This project demonstrates using a React front end in an Electron application with both the front end (i.e., the "renderer" process
+in Electron) and the back end (i.e., the "main" process in Electron) implemented in TypeScript.  Also, the React front end has not
+been "ejected" so there is no explicit WebPack configuration (i.e., the React scripts control WebPack).
 
 Here is [the LinkedIn article](https://www.linkedin.com/pulse/notes-create-react-app-using-typescript-electron-chris-idzerda/)
 referencing this repository.  Here is [the command, with output](README.txt), that created this repository.  Here is [the React
