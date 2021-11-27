@@ -34,7 +34,6 @@
     <Content Include="src\App.sass" />
     <Content Include="src\index.sass" />
     <Content Include="src\logo.svg" />
-    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\App.test.tsx" />
