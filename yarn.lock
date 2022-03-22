@@ -1936,20 +1936,15 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*":
-  version "15.12.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.2.tgz#1f2b42c4be7156ff4a6f914b2fb03d05fa84e38d"
-  integrity sha512-zjQ69G564OCIWIOHSXyQEEDpdpGl+G348RAKY0XXy9Z5kU9Vzv1GMNnkar/ZJ8dzXB3COzD9Mo9NtRZ4xfgUww==
+"@types/node@*", "@types/node@^16.9.1":
+  version "16.11.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.10.tgz#2e3ad0a680d96367103d3e670d41c2fed3da61ae"
+  integrity sha512-3aRnHa1KlOEEhJ6+CvyHKK5vE9BcLGjtUpwvqYLRvYNQKMfabu3BwfJaA/SLW8dxe28LsNDjtHwePTuzn3gmOA==
 
 "@types/node@^14.6.2":
   version "14.17.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.3.tgz#6d327abaa4be34a74e421ed6409a0ae2f47f4c3d"
   integrity sha512-e6ZowgGJmTuXa3GyaPbTGxX17tnThl2aSSizrFthQ7m9uLGZBXiGhgE55cjRZTF5kjZvYn9EOPOMljdjwbflxw==
-
-"@types/node@^16.9.1":
-  version "16.11.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.10.tgz#2e3ad0a680d96367103d3e670d41c2fed3da61ae"
-  integrity sha512-3aRnHa1KlOEEhJ6+CvyHKK5vE9BcLGjtUpwvqYLRvYNQKMfabu3BwfJaA/SLW8dxe28LsNDjtHwePTuzn3gmOA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4963,10 +4958,10 @@ electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.723:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.752.tgz#0728587f1b9b970ec9ffad932496429aef750d09"
   integrity sha512-2Tg+7jSl3oPxgsBsWKh5H83QazTkmWG/cnNwJplmyZc7KcN61+I10oUgaXSVk/NwfvN3BdkKDR4FYuRBQQ2v0A==
 
-electron@^16.0.2:
-  version "16.0.2"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-16.0.2.tgz#6d0ae3152c410478dfffdbf80852a3840679b8c5"
-  integrity sha512-kT746yVMztrP4BbT3nrFNcUcfgFu2yelUw6TWBVTy0pju+fBISaqcvoiMrq+8U0vRpoXSu2MJYygOf4T0Det7g==
+electron@^16.0.6:
+  version "16.0.6"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-16.0.6.tgz#d7a420ef2cb39d7d0a4d8760c03d72b137a033d5"
+  integrity sha512-Xs9dYLYhcJf3wXn8m2gDqFTb1L862KEhMxOx9swfFBHj6NoUPPtUgw/RyPQ0tXN1XPxG9vnBkoI0BdcKwrLKuQ==
   dependencies:
     "@electron/get" "^1.13.0"
     "@types/node" "^14.6.2"
