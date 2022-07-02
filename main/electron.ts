@@ -56,7 +56,7 @@ function createWindow() {
 
   // Emitted when the window gains focus.
   window.on('focus', function() {
-    setActiveWindow(window!);
+    setActiveWindow(window);
   });
 
   windows.push(window);

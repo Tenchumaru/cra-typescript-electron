@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -15,10 +16,11 @@
     "moduleResolution": "node",
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "es2015",
-    "skipLibCheck": true
+    "target": "ESNext"
   },
   "include": [
     "src"
