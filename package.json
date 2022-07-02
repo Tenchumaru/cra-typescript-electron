@@ -15,7 +15,8 @@
     "appId": "com.example.cra-typescript-electron",
     "extends": "react-cra",
     "mac": {
-      "category": "public.app-category.developer-tools"
+      "category": "public.app-category.utilities",
+      "icon": "build/favicon.png"
     },
     "win": {
       "icon": "build/favicon.ico"
