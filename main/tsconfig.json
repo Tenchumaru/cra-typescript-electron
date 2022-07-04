@@ -1,20 +1,16 @@
 {
   "compilerOptions": {
-    "outDir": "../build",
-    "allowJs": true,
-    "skipLibCheck": false,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ]
+      "DOM",
+      "ES6"
+    ],
+    "module": "CommonJS",
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "../build",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES6"
   }
 }

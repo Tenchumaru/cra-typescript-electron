@@ -3,6 +3,7 @@ import { join } from 'path';
 import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
 import { format, parse } from 'url';
 import { setActiveWindow } from './api';
+import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 // Keep references to all window objects so they aren't garbage-collected.
 const windows: BrowserWindow[] = [];
@@ -49,13 +50,13 @@ function createWindow() {
   // window.webContents.openDevTools();
 
   // Emitted when the window is closed.
-  window.on('closed', function() {
+  window.on('closed', () => {
     // Remove the window from the collection.
     windows.splice(0, windows.length, ...windows.filter((e) => e !== window));
   });
 
   // Emitted when the window gains focus.
-  window.on('focus', function() {
+  window.on('focus', () => {
     setActiveWindow(window);
   });
 
@@ -80,21 +81,47 @@ function createWindow() {
   }
 }
 
+let child: ChildProcess;
+
+async function startApplication() {
+  if (process.env.DEV_URL) {
+    const options = process.platform === 'win32' ? { shell: true } : {};
+    await new Promise((resolve, reject) => {
+      child = spawn('yarn', ['electron:start-react'], options);
+      child.on('error', reject);
+      child.on('spawn', resolve);
+    });
+    await new Promise((resolve, reject) => {
+      const waiter = spawn('yarn', ['electron:wait-for-react'], options);
+      waiter.on('error', reject);
+      waiter.on('exit', resolve);
+    })
+  }
+  createWindow();
+}
+
 // This method will be called when Electron has finished initialization and
 // is ready to create browser windows.  Some APIs can be used only after
 // this event occurs.
-app.on('ready', createWindow);
+app.on('ready', startApplication);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
   if (process.platform !== 'darwin') {
+    if (child) {
+      if (process.platform === 'win32') {
+        spawnSync('taskkill', ['/f', '/pid', child.pid!.toString(), '/t']);
+      } else {
+        child.kill();
+      }
+    }
     app.quit();
   }
 });
 
-app.on('activate', function() {
+app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the dock icon
   // is clicked and there are no other windows open.
   if (!windows.length) {

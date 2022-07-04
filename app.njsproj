@@ -5,11 +5,9 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>app</Name>
     <RootNamespace>app</RootNamespace>
-    <ScriptArguments>--inspect-brk=6006</ScriptArguments>
+    <NodeExePath>node_modules\electron\dist\electron.exe</NodeExePath>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
-    <Environment>BROWSER=none
-DEV_URL=http://localhost:4349
-PORT=4349</Environment>
+    <Environment>DEV_URL=http://localhost:4349</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -17,7 +15,7 @@ PORT=4349</Environment>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fb5105e7-8fc5-4db7-8487-ae22773af578</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>start.js</StartupFile>
+    <StartupFile>build/electron.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -46,7 +44,6 @@ PORT=4349</Environment>
     <Content Include="src\App.sass" />
     <Content Include="src\index.sass" />
     <Content Include="src\logo.svg" />
-    <Content Include="start.js" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +70,7 @@ PORT=4349</Environment>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
