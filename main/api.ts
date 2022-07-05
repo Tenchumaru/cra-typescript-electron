@@ -1,5 +1,5 @@
 import { IpcMainEvent, BrowserWindow, ipcMain, dialog } from 'electron';
-import fs from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 import { EOL } from 'os';
 import { Request } from './request';
 
@@ -24,7 +24,7 @@ async function fulfillRequest(event: IpcMainEvent, id: number, request: Request)
         response = request.value;
         break;
       case 'readFile':
-        response = await readFile(request.filePath);
+        response = await readFile(request.filePath, 'utf8');
         break;
       case 'showMessageBox':
         delete request.kind;
@@ -39,35 +39,11 @@ async function fulfillRequest(event: IpcMainEvent, id: number, request: Request)
         response = (await dialog.showSaveDialog(activeWindow, request)).filePath;
         break;
       case 'writeFile':
-        await writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data);
+        await writeFile(request.filePath, process.platform === 'win32' ? request.data.replace(/\\n/g, EOL) : request.data, 'utf8');
         break;
     }
     event.reply('response', id, response);
   } catch (ex) {
     event.reply('response', id, undefined, ex);
   }
-}
-
-function readFile(filePath: string): Promise<string> {
-  return new Promise<string>((resove, reject) => {
-    fs.readFile(filePath, { encoding: 'utf8' }, (ex, data) => {
-      if (ex) {
-        reject(ex);
-      } else {
-        resove(data);
-      }
-    });
-  });
-}
-
-function writeFile(filePath: string, data: string): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    fs.writeFile(filePath, data, { encoding: 'utf8' }, (ex) => {
-      if (ex) {
-        reject(ex);
-      } else {
-        resolve();
-      }
-    });
-  });
 }
