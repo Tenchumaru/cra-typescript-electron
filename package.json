@@ -44,10 +44,10 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "cross-env": "^7.0.3",
-    "electron": "^18.3.5",
-    "electron-builder": "^23.1.0",
-    "sass": "^1.53.0",
-    "typescript": "^4.7.4",
+    "electron": "^20.2.0",
+    "electron-builder": "^23.6.0",
+    "sass": "^1.55.0",
+    "typescript": "^4.8.4",
     "wait-on": "^6.0.1"
   },
   "eslintConfig": {
