@@ -12,10 +12,17 @@ interface Response {
 }
 
 type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
+type ObserverFn = (message: string) => void;
 
 (() => {
   const entries: { [key: number]: Entry } = {};
+  let messageHandler: ObserverFn = (_) => { };
   let id = 0;
+
+  ipcRenderer.on('main', (_event, message: string) => {
+    // Do not include the event since it includes the sender.
+    messageHandler(message);
+  });
 
   ipcRenderer.on('response', (_event, id: number, response: Response, ex: Error) => {
     // Do not include the event since it includes the sender.
@@ -43,6 +50,9 @@ type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
     },
     showSaveDialog: (defaultPath?: string, title?: string): Promise<string | undefined> => {
       return request({ kind: 'showSaveDialog', defaultPath, title });
+    },
+    setMessageHandler: (fn: ObserverFn): void => {
+      messageHandler = fn;
     },
     writeFile: (filePath: string, data: string): Promise<void> => {
       return request({ kind: 'writeFile', filePath, data });

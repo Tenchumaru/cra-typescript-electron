@@ -49,6 +49,16 @@ function createWindow() {
   // Open the Chromium Development Tools.
   // window.webContents.openDevTools();
 
+  let timerId: ReturnType<typeof setInterval>;
+  window.webContents.on('did-finish-load', () => {
+    timerId = setInterval(() => window.webContents.send('main', new Date().toString()), 990);
+  });
+
+  // Emitted when the window is to be closed.
+  window.on('close', () => {
+    clearInterval(timerId);
+  });
+
   // Emitted when the window is closed.
   window.on('closed', () => {
     // Remove the window from the collection.

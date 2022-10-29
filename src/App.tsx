@@ -2,18 +2,27 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse } from './main';
+import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse, subscribe, unsubscribe } from './main';
 
 interface State {
   result?: string;
+  time?: string;
 }
 
 export class App extends React.Component<{}, State> {
-  state: State = {}
+  state: State = {};
   private value: number = 0;
 
+  componentDidMount() {
+    subscribe(this.onMessage);
+  }
+
+  componentWillUnmount() {
+    unsubscribe(this.onMessage);
+  }
+
   render() {
-    const { result } = this.state;
+    const { result, time } = this.state;
     return (
       <div className="App">
         <header className="App__header">
@@ -33,6 +42,8 @@ export class App extends React.Component<{}, State> {
         <button onClick={this.fiveSeconds}>Five Seconds</button>
         <br />
         <textarea onChange={this.onChange} value={result} />
+        <br />
+        <span>Time from main: <span id="time">{time}</span></span>
       </div>
     );
   }
@@ -40,6 +51,10 @@ export class App extends React.Component<{}, State> {
   private onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const result = event.currentTarget.value;
     this.setState({ result });
+  }
+
+  private onMessage = (time: string) => {
+    this.setState({ time });
   }
 
   private fiveSeconds = async () => {
