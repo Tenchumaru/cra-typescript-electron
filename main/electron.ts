@@ -50,8 +50,10 @@ function createWindow() {
   // window.webContents.openDevTools();
 
   let timerId: ReturnType<typeof setInterval>;
+
   window.webContents.on('did-finish-load', () => {
-    timerId = setInterval(() => window.webContents.send('main', new Date().toString()), 990);
+    // This might run multiple times since it depends on the renderer process.
+    timerId = timerId || setInterval(() => window.webContents.send('main', new Date().toString()), 990);
   });
 
   // Emitted when the window is to be closed.
@@ -95,19 +97,19 @@ let child: ChildProcess;
 
 async function startApplication() {
   if (process.env.DEV_URL) {
-    const options = process.platform === 'win32' ? { shell: true } : {};
-    await new Promise((resolve, reject) => {
-      child = spawn('yarn', ['electron:start-react'], options);
-      child.on('error', reject);
-      child.on('spawn', resolve);
-    });
-    await new Promise((resolve, reject) => {
-      const waiter = spawn('yarn', ['electron:wait-for-react'], options);
-      waiter.on('error', reject);
-      waiter.on('exit', resolve);
-    })
+    await runYarnAsync('electron:start-web');
+    await runYarnAsync('electron:wait-for-web');
   }
   createWindow();
+}
+
+function runYarnAsync(command: string): Promise<void> {
+  const options = { shell: process.platform === 'win32' };
+  return new Promise<void>((resolve, reject) => {
+    child = spawn('yarn', [command], options);
+    child.on('error', reject);
+    child.on('spawn', resolve);
+  });
 }
 
 // This method will be called when Electron has finished initialization and

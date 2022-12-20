@@ -13,8 +13,8 @@
     "release": "yarn build && electron-builder --publish=never",
     "clean": "cd main && tsc --build --clean",
     "electron:build": "tsc --project main",
-    "electron:start-react": "cross-env BROWSER=none PORT=4349 react-scripts start",
-    "electron:wait-for-react": "wait-on http://localhost:4349",
+    "electron:start-web": "cross-env BROWSER=none PORT=4349 react-scripts start",
+    "electron:wait-for-web": "wait-on http://localhost:4349",
     "eject": "react-scripts eject"
   },
   "build": {
