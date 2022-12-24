@@ -1,127 +1,118 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
 import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse, subscribe, unsubscribe } from './main';
 
-interface State {
-  result?: string;
-  time?: string;
-}
+export function App() {
+  let value: number = 0;
+  const [result, setResult] = useState('');
+  const [time, setTime] = useState('');
+  useEffect(() => {
+    subscribe(onMessage);
+    return () => {
+      unsubscribe(onMessage);
+    }
+  }, []);
 
-export class App extends React.Component<{}, State> {
-  state: State = {};
-  private value: number = 0;
+  return (
+    <div className="App">
+      <header className="App__header">
+        <img src={logo} className="App__logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> or any other file in the <code>src</code> directory and save to reload.
+        </p>
+        <a className="App__link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a>
+      </header>
+      <Hello name="George" enthusiasmLevel={5} />
+      <button onClick={mainReadFile}>Read File</button>
+      <button onClick={mainShowMessageBox}>Show Message Box</button>
+      <button onClick={mainShowOpenDialog}>Show Open Dialog</button>
+      <button onClick={mainShowSaveDialog}>Show Save Dialog</button>
+      <button onClick={mainWriteFile}>Write File</button>
+      <button onClick={testDelayResponse}>Test Delay Response</button>
+      <button onClick={fiveSeconds}>Five Seconds</button>
+      <br />
+      <textarea onChange={onChange} value={result} />
+      <br />
+      <span>Time from main: <span id="time">{time}</span></span>
+    </div>
+  );
 
-  componentDidMount() {
-    subscribe(this.onMessage);
-  }
-
-  componentWillUnmount() {
-    unsubscribe(this.onMessage);
-  }
-
-  render() {
-    const { result, time } = this.state;
-    return (
-      <div className="App">
-        <header className="App__header">
-          <img src={logo} className="App__logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> or any other file in the <code>src</code> directory and save to reload.
-          </p>
-          <a className="App__link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a>
-        </header>
-        <Hello name="George" enthusiasmLevel={5} />
-        <button onClick={this.readFile}>Read File</button>
-        <button onClick={this.showMessageBox}>Show Message Box</button>
-        <button onClick={this.showOpenDialog}>Show Open Dialog</button>
-        <button onClick={this.showSaveDialog}>Show Save Dialog</button>
-        <button onClick={this.writeFile}>Write File</button>
-        <button onClick={this.testDelayResponse}>Test Delay Response</button>
-        <button onClick={this.fiveSeconds}>Five Seconds</button>
-        <br />
-        <textarea onChange={this.onChange} value={result} />
-        <br />
-        <span>Time from main: <span id="time">{time}</span></span>
-      </div>
-    );
-  }
-
-  private onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  function onChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const result = event.currentTarget.value;
-    this.setState({ result });
+    setResult(result);
   }
 
-  private onMessage = (time: string) => {
-    this.setState({ time });
+  function onMessage(time: string) {
+    setTime(time);
   }
 
-  private fiveSeconds = async () => {
-    ++this.value;
-    const result = await delayResponse(5555, this.value.toString());
-    this.setState({ result });
+  async function fiveSeconds() {
+    ++value;
+    const result = await delayResponse(5555, value.toString());
+    setResult(result);
   }
 
-  private testDelayResponse = async () => {
-    const response5 = delayResponse(5555, 'five');
-    const response4 = delayResponse(4444, 'four');
-    const response3 = delayResponse(3333, 'three');
-    const response2 = delayResponse(2222, 'two');
-    const response1 = delayResponse(1111, 'one');
-    const responses = await Promise.all([response1, response2, response3, response4, response5]);
+  async function testDelayResponse() {
+    const promise5 = delayResponse(5555, 'five');
+    const promise4 = delayResponse(4444, 'four');
+    const promise3 = delayResponse(3333, 'three');
+    const promise2 = delayResponse(2222, 'two');
+    const promise1 = delayResponse(1111, 'one');
+    const responses = await Promise.all([promise1, promise2, promise3, promise4, promise5]);
     const result = `one is ${responses[0]}\ntwo is ${responses[1]}\nthree is ${responses[2]}\nfour is ${responses[3]}\nfive is ${responses[4]}`;
-    this.setState({ result });
+    setResult(result);
   }
 
-  private readFile = async () => {
+  async function mainReadFile() {
     try {
       const filePath = await showOpenDialog();
       if (filePath) {
         const result = await readFile(filePath);
-        this.setState({ result });
+        setResult(result);
       }
     } catch (ex: any) {
-      this.setState({ result: ex.message });
+      setResult(ex.message);
     }
   }
 
-  private showMessageBox = async () => {
+  async function mainShowMessageBox() {
     try {
       const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
-      this.setState({ result: `Button at position ${result} pressed` });
+      setResult(`Button at position ${result} pressed`);
     } catch (ex: any) {
-      this.setState({ result: ex.message });
+      setResult(ex.message);
     }
   }
 
-  private showOpenDialog = async () => {
+  async function mainShowOpenDialog() {
     try {
       const result = await showOpenDialog();
-      this.setState({ result });
+      setResult(result || '');
     } catch (ex: any) {
-      this.setState({ result: ex.message });
+      setResult(ex.message);
     }
   }
 
-  private showSaveDialog = async () => {
+  async function mainShowSaveDialog() {
     try {
       const result = await showSaveDialog();
-      this.setState({ result });
+      setResult(result || '');
     } catch (ex: any) {
-      this.setState({ result: ex.message });
+      setResult(ex.message);
     }
   }
 
-  private writeFile = async () => {
-    if (this.state.result) {
+  async function mainWriteFile() {
+    if (result) {
       try {
         const filePath = await showSaveDialog();
         if (filePath) {
-          await writeFile(filePath, this.state.result);
+          await writeFile(filePath, result);
         }
       } catch (ex: any) {
-        this.setState({ result: ex.message });
+        setResult(ex.message);
       }
     }
   }
