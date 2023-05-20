@@ -6,7 +6,7 @@ dist/
 obj/
 node_modules/
 .DS_Store
-*.js
+*/*.js
 *.js.map
 *.log
 *.sw[op]

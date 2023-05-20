@@ -14,7 +14,7 @@
     "clean": "cd main && tsc --build --clean",
     "electron:build": "tsc --project main",
     "electron:start-web": "cross-env BROWSER=none PORT=4349 react-scripts start",
-    "electron:wait-for-web": "wait-on http://localhost:4349",
+    "electron:wait-for-web": "node wait-for-web.js",
     "eject": "react-scripts eject"
   },
   "build": {
@@ -47,8 +47,7 @@
     "electron": "^24.3.1",
     "electron-builder": "^23.6.0",
     "sass": "^1.55.0",
-    "typescript": "^4.8.4",
-    "wait-on": "^6.0.1"
+    "typescript": "^4.8.4"
   },
   "eslintConfig": {
     "extends": [
