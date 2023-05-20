@@ -59,6 +59,7 @@
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\react-app-env.d.ts" />
     <TypeScriptCompile Include="src\setupTests.ts" />
+    <TypeScriptCompile Include="src\main.mock.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
