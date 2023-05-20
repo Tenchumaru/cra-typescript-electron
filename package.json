@@ -9,7 +9,7 @@
   "scripts": {
     "build": "cross-env INLINE_RUNTIME_CHUNK=false react-scripts build && yarn electron:build",
     "test": "react-scripts test",
-    "start": "yarn electron:build && electron build/electron.js",
+    "start": "yarn electron:build && cross-env DEV_URL=http://localhost:4349 electron build/electron.js",
     "release": "yarn build && electron-builder --publish=never",
     "clean": "cd main && tsc --build --clean",
     "electron:build": "tsc --project main",
