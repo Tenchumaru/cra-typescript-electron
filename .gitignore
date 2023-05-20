@@ -3,11 +3,11 @@
 bin/
 build/
 dist/
-obj/
 node_modules/
-.DS_Store
+obj/
 */*.js
 *.js.map
 *.log
 *.sw[op]
 *.user
+.DS_Store
