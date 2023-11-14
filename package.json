@@ -23,7 +23,8 @@
     "extends": "react-cra",
     "mac": {
       "category": "public.app-category.utilities",
-      "icon": "build/favicon.png"
+      "icon": "build/favicon.png",
+      "target": "7z"
     },
     "win": {
       "icon": "build/favicon.ico"
@@ -36,6 +37,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
