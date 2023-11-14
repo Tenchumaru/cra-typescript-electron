@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "Chris Idzerda",
   "description": "CRA Typescript Electron",
+  "license": "MIT",
   "homepage": ".",
   "main": "build/electron.js",
   "private": true,
@@ -47,7 +48,7 @@
     "@types/react-dom": "^18.2.15",
     "cross-env": "^7.0.3",
     "electron": "^26.3.0",
-    "electron-builder": "^23.6.0",
+    "electron-builder": "^24.6.4",
     "sass": "^1.69.5",
     "typescript": "^4.9.5"
   },
