@@ -18,7 +18,7 @@ start running.
 To run the project, run `yarn start`.  If you'd like to debug the application using Visual Studio 2017 or above on Windows, open
 [the solution file](cra-typescript-electron.sln) and follow [these debugging instructions](DEBUG.md).
 
-To build the project for release, run `yarn build`.  This will create both the app and an installer (`.exe` for Windows and `.dmg`
+To build the project for release, run `yarn release`.  This will create both the app and an installer (`.exe` for Windows and `.dmg`
 for macOS) in the `dist` directory.  The app is in a subdirectory (`dist\win-unpacked` for Windows and `dist/mac/CRA TypeScript
 Electron.app/Contents/MacOS` for macOS).  Build errors are usually the result of updating the project.  Delete the `node_modules`
 directory and run `yarn` to recreate it.

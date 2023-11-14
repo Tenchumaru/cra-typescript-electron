@@ -1,4 +1,4 @@
-$ yarn create react-app cra-typescript-electron --template typescript
+> yarn create react-app cra-typescript-electron --template typescript
 yarn create v1.22.17
 [1/4] Resolving packages...
 warning create-react-app > tar-pack > tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap.
