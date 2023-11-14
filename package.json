@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "Chris Idzerda",
   "description": "CRA Typescript Electron",
+  "license": "MIT",
   "homepage": ".",
   "main": "build/electron.js",
   "private": true,
@@ -23,7 +24,8 @@
     "extends": "react-cra",
     "mac": {
       "category": "public.app-category.utilities",
-      "icon": "build/favicon.png"
+      "icon": "build/favicon.png",
+      "target": "7z"
     },
     "win": {
       "icon": "build/favicon.ico"
@@ -36,17 +38,18 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.31",
-    "@types/react": "^18.2.6",
-    "@types/react-dom": "^18.2.4",
+    "@types/node": "^18.18.9",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
     "cross-env": "^7.0.3",
-    "electron": "^24.8.5",
-    "electron-builder": "^23.6.0",
-    "sass": "^1.62.1",
+    "electron": "^26.3.0",
+    "electron-builder": "^24.6.4",
+    "sass": "^1.69.5",
     "typescript": "^4.9.5"
   },
   "eslintConfig": {
