@@ -8,7 +8,7 @@
   "main": "build/electron.js",
   "private": true,
   "scripts": {
-    "build": "cross-env INLINE_RUNTIME_CHUNK=false react-scripts build && yarn electron:build",
+    "build": "cross-env INLINE_RUNTIME_CHUNK=false concurrently \"react-scripts build\" \"yarn electron:build\"",
     "test": "react-scripts test",
     "start": "yarn electron:build && cross-env DEV_URL=http://localhost:4349 electron build/electron.js",
     "release": "yarn build && electron-builder --publish=never",
@@ -46,6 +46,7 @@
     "@types/node": "^18.18.9",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "electron": "^26.3.0",
     "electron-builder": "^24.6.4",
