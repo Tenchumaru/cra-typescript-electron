@@ -7,7 +7,7 @@ interface Entry {
 }
 
 interface Response {
-  data: any;
+  data: unknown;
   id: number;
 }
 
