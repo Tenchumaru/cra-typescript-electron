@@ -7,7 +7,8 @@
     <RootNamespace>app</RootNamespace>
     <NodeExePath>node_modules\electron\dist\electron.exe</NodeExePath>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
-    <Environment>DEV_URL=http://localhost:4349</Environment>
+    <Environment>DEV_URL=http://localhost:4349
+IN_VISUAL_STUDIO=1</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>

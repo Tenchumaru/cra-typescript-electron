@@ -97,7 +97,9 @@ let child: ChildProcess;
 
 async function startApplication() {
   if (process.env.DEV_URL) {
-    child = await runNpmAsync('spawn', 'electron:start-web');
+    if (process.env.IN_VISUAL_STUDIO) {
+      child = await runNpmAsync('spawn', 'electron:start-web');
+    }
     await runNpmAsync('exit', 'electron:wait-for-web');
   }
   createWindow();

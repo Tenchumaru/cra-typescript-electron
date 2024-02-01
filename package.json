@@ -10,7 +10,7 @@
   "scripts": {
     "build": "cross-env INLINE_RUNTIME_CHUNK=false concurrently \"react-scripts build\" \"npm run electron:build\"",
     "test": "react-scripts test",
-    "start": "npm run electron:build && cross-env DEV_URL=http://localhost:4349 concurrently \"tsc --project main -w\" \"electronmon build/electron.js\"",
+    "start": "npm run electron:build && cross-env DEV_URL=http://localhost:4349 concurrently \"tsc --project main -w\" \"npm run electron:start-web\" \"electronmon build/electron.js\"",
     "release": "npm run build && electron-builder --publish=never",
     "clean": "cd main && tsc --build --clean",
     "electron:build": "tsc --project main",
