@@ -97,16 +97,16 @@ let child: ChildProcess;
 
 async function startApplication() {
   if (process.env.DEV_URL) {
-    child = await runYarnAsync('spawn', 'electron:start-web');
-    await runYarnAsync('exit', 'electron:wait-for-web');
+    child = await runNpmAsync('spawn', 'electron:start-web');
+    await runNpmAsync('exit', 'electron:wait-for-web');
   }
   createWindow();
 }
 
-function runYarnAsync(event: string, command: string): Promise<ChildProcess> {
+function runNpmAsync(event: string, command: string): Promise<ChildProcess> {
   const options = { shell: process.platform === 'win32' };
   return new Promise<ChildProcess>((resolve, reject) => {
-    const child = spawn('yarn', [command], options);
+    const child = spawn('npm', ['run', command], options);
     child.on('error', reject);
     child.on(event, () => resolve(child));
   });

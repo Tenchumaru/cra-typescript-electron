@@ -26,7 +26,7 @@ https://stackoverflow.com/questions/46500302/attach-visual-studio-debugger-to-el
 
 ### Development build
 
-1. Run `yarn start --inspect-brk=6006`.  The application will start but no window will appear.
+1. Run `npm start --inspect-brk=6006`.  The application will start but no window will appear.
 1. Visit `chrome://inspect/#devices` in Chrome.
 1. Click the **inspect** link.  The debugger will load `main.js`.
 1. If necessary, add the `.../cra-typescript-electron/main` folder to the workspace by clicking the `+` icon, navigating to it, and selecting it.
