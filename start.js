@@ -10,3 +10,12 @@ child.stdout.on('data', (buffer) => {
 child.stderr.on('data', (buffer) => {
   process.stderr.write(buffer);
 });
+child.on('spawn', () => {
+  console.log('spawned NPM, process ID', child.pid);
+});
+child.on('error', (err) => {
+  console.error(err);
+});
+child.on('exit', () => {
+  console.log('done');
+});
