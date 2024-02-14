@@ -5,20 +5,18 @@ in Electron) and the back end (i.e., the "main" process in Electron) implemented
 been "ejected" so there is no explicit WebPack configuration (i.e., the React scripts control WebPack).
 
 Here is [the LinkedIn article](https://www.linkedin.com/pulse/notes-create-react-app-using-typescript-electron-chris-idzerda/)
-referencing this repository.  Here is [the command, with output](README.txt), that created this repository.  Here is [the React
-README](React.md) created as a result of that command.
+referencing this repository.  Here is [the React README](React.md) created as a result of creating the front end of this repository.
 
-This project uses [yarn](https://yarnpkg.com) instead of NPM.  Since it is a command line tool, perform all references to running
-`yarn` commands on the command line in the project directory.  After installing it, run `yarn` without any arguments to initialize
-the project.  If you have Node installed, it must be at least version 14.
+Since NPM is a command line tool, perform all references to running `npm` commands on the command line in the project directory.
+After cloning it, run `npm i` to initialize the project.  If you have Node installed, it must be at least version 14.
 
-To run the tests in the project, run `yarn test`.  Due to TypeScript compilation, it will take several seconds for the tests to
+To run the tests in the project, run `npm test`.  Due to TypeScript compilation, it will take several seconds for the tests to
 start running.
 
-To run the project, run `yarn start`.  If you'd like to debug the application using Visual Studio 2017 or above on Windows, open
+To run the project, run `npm start`.  If you'd like to debug the application using Visual Studio 2017 or above on Windows, open
 [the solution file](cra-typescript-electron.sln) and follow [these debugging instructions](DEBUG.md).
 
-To build the project for release, run `yarn release`.  This will create both the app and an installer (`.exe` for Windows and `.dmg`
+To build the project for release, run `npm run release`.  This will create both the app and an installer (`.exe` for Windows and `.dmg`
 for macOS) in the `dist` directory.  The app is in a subdirectory (`dist\win-unpacked` for Windows and `dist/mac/CRA TypeScript
 Electron.app/Contents/MacOS` for macOS).  Build errors are usually the result of updating the project.  Delete the `node_modules`
-directory and run `yarn` to recreate it.
+directory and run `npm i` to recreate it.
