@@ -2,7 +2,7 @@
 import { join } from 'path';
 import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
 import { format, parse } from 'url';
-import { setActiveWindow } from './api';
+import { setActiveWindow, startTimer, stopTimer } from './api';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 // Keep references to all window objects so they aren't garbage-collected.
@@ -49,16 +49,14 @@ function createWindow() {
   // Open the Chromium Development Tools.
   // window.webContents.openDevTools();
 
-  let timerId: ReturnType<typeof setInterval>;
-
   window.webContents.on('did-finish-load', () => {
     // This might run multiple times since it depends on the renderer process.
-    timerId = timerId || setInterval(() => window.webContents.send('main', new Date().toString()), 990);
+    startTimer();
   });
 
   // Emitted when the window is to be closed.
   window.on('close', () => {
-    clearInterval(timerId);
+    stopTimer();
   });
 
   // Emitted when the window is closed.

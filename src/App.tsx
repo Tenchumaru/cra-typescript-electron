@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.sass';
 import { Hello } from './components/Hello';
-import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse, subscribe, unsubscribe } from './main';
+import { readFile, showMessageBox, showOpenDialog, showSaveDialog, writeFile, delayResponse, subscribe, unsubscribe, startTimer, stopTimer } from './main';
 
 export function App() {
   let value: number = 0;
@@ -32,6 +32,8 @@ export function App() {
       <button onClick={mainWriteFile}>Write File</button>
       <button onClick={testDelayResponse}>Test Delay Response</button>
       <button onClick={fiveSeconds}>Five Seconds</button>
+      <button onClick={startTimer}>Start Timer</button>
+      <button onClick={stopTimer}>Stop Timer</button>
       <br />
       <textarea onChange={onChange} value={result} />
       <br />
@@ -79,7 +81,13 @@ export function App() {
 
   async function mainShowMessageBox() {
     try {
-      const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
+      const options: Parameters<typeof showMessageBox>[0] = {
+        message: 'Hello from renderer process',
+        buttons: ['OK', 'Cancel'],
+        title: 'App',
+        type: 'info'
+      };
+      const result = await showMessageBox(options);
       setResult(`Button at position ${result} pressed`);
     } catch (ex: any) {
       setResult(ex.message);
