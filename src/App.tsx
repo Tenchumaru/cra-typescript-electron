@@ -79,7 +79,13 @@ export function App() {
 
   async function mainShowMessageBox() {
     try {
-      const result = await showMessageBox('Hello from renderer process', ['OK', 'Cancel'], 'App', 'info');
+      const options: Parameters<typeof showMessageBox>[0] = {
+        message: 'Hello from renderer process',
+        buttons: ['OK', 'Cancel'],
+        title: 'App',
+        type: 'info'
+      };
+      const result = await showMessageBox(options);
       setResult(`Button at position ${result} pressed`);
     } catch (ex: any) {
       setResult(ex.message);

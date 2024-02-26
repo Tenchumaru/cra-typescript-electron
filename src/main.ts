@@ -1,4 +1,4 @@
-export type MessageBoxType = 'none' | 'info' | 'error' | 'question' | 'warning';
+import { MessageBoxOptions } from 'electron';
 export type ObserverFn = (message: string) => void;
 
 declare global {
@@ -6,7 +6,7 @@ declare global {
     main: {
       delayResponse: (duration: number, value: string) => Promise<string>;
       readFile: (filePath: string) => Promise<string>;
-      showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType) => Promise<number>;
+      showMessageBox: (options: MessageBoxOptions) => Promise<number>;
       showOpenDialog: (defaultPath?: string, title?: string) => Promise<string | undefined>;
       showSaveDialog: (defaultPath?: string, title?: string) => Promise<string | undefined>;
       setMessageHandler: (fn: ObserverFn) => void;
@@ -33,8 +33,8 @@ export function readFile(filePath: string): Promise<string> {
   return window.main.readFile(filePath);
 }
 
-export function showMessageBox(message: string, buttons?: string[], title?: string, type?: MessageBoxType): Promise<number> {
-  return window.main.showMessageBox(message, buttons, title, type);
+export function showMessageBox(options: MessageBoxOptions): Promise<number> {
+  return window.main.showMessageBox(options);
 }
 
 export function showOpenDialog(defaultPath?: string, title?: string): Promise<string | undefined> {
