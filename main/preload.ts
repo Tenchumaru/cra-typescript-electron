@@ -29,6 +29,12 @@ type ObserverFn = (message: string) => void;
     setMessageHandler: (fn: ObserverFn): void => {
       messageHandler = fn;
     },
+    startTimer: (): void => {
+      ipcRenderer.send('startTimer');
+    },
+    stopTimer: (): void => {
+      ipcRenderer.send('stopTimer');
+    },
     writeFile: (filePath: string, data: string): Promise<void> => {
       return ipcRenderer.invoke('writeFile', filePath, data);
     },

@@ -10,6 +10,8 @@ declare global {
       showOpenDialog: (defaultPath?: string, title?: string) => Promise<string | undefined>;
       showSaveDialog: (defaultPath?: string, title?: string) => Promise<string | undefined>;
       setMessageHandler: (fn: ObserverFn) => void;
+      startTimer: () => void;
+      stopTimer: () => void;
       writeFile: (filePath: string, data: string) => Promise<void>;
     },
   }
@@ -56,6 +58,14 @@ export function unsubscribe(fn: ObserverFn): void {
   if (~index) {
     observers.splice(index, 1);
   }
+}
+
+export function startTimer() {
+  window.main.startTimer();
+}
+
+export function stopTimer() {
+  window.main.stopTimer();
 }
 
 export function writeFile(filePath: string, data: string): Promise<void> {

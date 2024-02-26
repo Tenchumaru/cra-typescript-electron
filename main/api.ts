@@ -3,6 +3,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { EOL } from 'os';
 
 let activeWindow: BrowserWindow;
+let timerId: ReturnType<typeof setInterval> | undefined;
 
 ipcMain.handle('delayResponse', async (_event, duration: number, value: string) => {
   console.log('received delayResponse:', duration, value);
@@ -33,7 +34,26 @@ ipcMain.handle('writeFile', (_event, filePath: string, data: string) => {
   }
   return writeFile(filePath, data, 'utf8');
 });
+ipcMain.on('startTimer', (_event) => {
+  startTimer();
+});
+ipcMain.on('stopTimer', (_event) => {
+  stopTimer();
+});
 
 export function setActiveWindow(window: BrowserWindow) {
   activeWindow = window;
+}
+
+export function startTimer() {
+  if (!timerId) {
+    timerId = setInterval(() => activeWindow.webContents.send('main', new Date().toString()), 990);
+  }
+}
+
+export function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = undefined;
+  }
 }
