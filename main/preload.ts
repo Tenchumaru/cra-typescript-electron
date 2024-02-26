@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Request } from './request';
 
 interface Entry {
   reject: Function;
@@ -17,7 +16,6 @@ type ObserverFn = (message: string) => void;
 (() => {
   const entries: { [key: number]: Entry } = {};
   let messageHandler: ObserverFn = (_) => { };
-  let id = 0;
 
   ipcRenderer.on('main', (_event, message: string) => {
     // Do not include the event since it includes the sender.
@@ -37,34 +35,25 @@ type ObserverFn = (message: string) => void;
 
   contextBridge.exposeInMainWorld('main', {
     delayResponse: (duration: number, value: string): Promise<string> => {
-      return request({ kind: 'delayResponse', duration, value });
+      return ipcRenderer.invoke('delayResponse', duration, value);
     },
     readFile: (filePath: string): Promise<string> => {
-      return request({ kind: 'readFile', filePath });
+      return ipcRenderer.invoke('readFile', filePath);
     },
     showMessageBox: (message: string, buttons?: string[], title?: string, type?: MessageBoxType): Promise<number> => {
-      return request({ kind: 'showMessageBox', buttons, message, title, type });
+      return ipcRenderer.invoke('showMessageBox', { buttons, message, title, type });
     },
     showOpenDialog: (defaultPath?: string, title?: string): Promise<string | undefined> => {
-      return request({ kind: 'showOpenDialog', defaultPath, title });
+      return ipcRenderer.invoke('showOpenDialog', { defaultPath, title });
     },
     showSaveDialog: (defaultPath?: string, title?: string): Promise<string | undefined> => {
-      return request({ kind: 'showSaveDialog', defaultPath, title });
+      return ipcRenderer.invoke('showSaveDialog', { defaultPath, title });
     },
     setMessageHandler: (fn: ObserverFn): void => {
       messageHandler = fn;
     },
     writeFile: (filePath: string, data: string): Promise<void> => {
-      return request({ kind: 'writeFile', filePath, data });
+      return ipcRenderer.invoke('writeFile', filePath, data);
     },
   });
-
-  function request<T>(request: Request): Promise<T> {
-    ++id;
-    const promise = new Promise<T>((resolve, reject) => {
-      entries[id] = { reject, resolve };
-    });
-    ipcRenderer.send('request', id, request);
-    return promise;
-  }
 })();

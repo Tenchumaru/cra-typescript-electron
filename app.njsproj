@@ -51,7 +51,6 @@ IN_VISUAL_STUDIO=1</Environment>
     <TypeScriptCompile Include="main\api.ts" />
     <TypeScriptCompile Include="main\electron.ts" />
     <TypeScriptCompile Include="main\preload.ts" />
-    <TypeScriptCompile Include="main\request.ts" />
     <TypeScriptCompile Include="src\App.test.tsx" />
     <TypeScriptCompile Include="src\App.tsx" />
     <TypeScriptCompile Include="src\components\Hello.test.tsx" />
