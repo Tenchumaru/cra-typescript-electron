@@ -122,13 +122,6 @@ app.on('window-all-closed', () => {
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
   if (process.platform !== 'darwin') {
-    if (child) {
-      if (process.platform === 'win32') {
-        spawnSync('taskkill', ['/f', '/pid', child.pid!.toString(), '/t']);
-      } else {
-        child.kill();
-      }
-    }
     app.quit();
   }
 });
@@ -138,5 +131,15 @@ app.on('activate', () => {
   // is clicked and there are no other windows open.
   if (!windows.length) {
     createWindow();
+  }
+});
+
+app.on('will-quit', () => {
+  if (child) {
+    if (process.platform === 'win32') {
+      spawnSync('taskkill', ['/f', '/pid', child.pid!.toString(), '/t']);
+    } else {
+      child.kill();
+    }
   }
 });
