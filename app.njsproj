@@ -6,9 +6,7 @@
     <Name>app</Name>
     <RootNamespace>app</RootNamespace>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
-    <Environment>DEV_URL=http://localhost:4349
-IN_VISUAL_STUDIO=1</Environment>
-    <ScriptArguments>build/electron.js</ScriptArguments>
+    <Environment>DEV_URL=http://localhost:4349</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -16,7 +14,7 @@ IN_VISUAL_STUDIO=1</Environment>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fb5105e7-8fc5-4db7-8487-ae22773af578</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>node_modules\electronmon\bin\cli.js</StartupFile>
+    <StartupFile>start.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

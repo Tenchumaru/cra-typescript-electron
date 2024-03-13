@@ -91,13 +91,8 @@ function createWindow() {
   }
 }
 
-let child: ChildProcess;
-
 async function startApplication() {
   if (process.env.DEV_URL) {
-    if (process.env.IN_VISUAL_STUDIO) {
-      child = await runNpmAsync('spawn', 'electron:start-web');
-    }
     await runNpmAsync('exit', 'electron:wait-for-web');
   }
   createWindow();
@@ -131,15 +126,5 @@ app.on('activate', () => {
   // is clicked and there are no other windows open.
   if (!windows.length) {
     createWindow();
-  }
-});
-
-app.on('will-quit', () => {
-  if (child) {
-    if (process.platform === 'win32') {
-      spawnSync('taskkill', ['/f', '/pid', child.pid!.toString(), '/t']);
-    } else {
-      child.kill();
-    }
   }
 });
