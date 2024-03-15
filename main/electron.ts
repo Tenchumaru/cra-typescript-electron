@@ -91,13 +91,8 @@ function createWindow() {
   }
 }
 
-let child: ChildProcess;
-
 async function startApplication() {
   if (process.env.DEV_URL) {
-    if (process.env.IN_VISUAL_STUDIO) {
-      child = await runNpmAsync('spawn', 'electron:start-web');
-    }
     await runNpmAsync('exit', 'electron:wait-for-web');
   }
   createWindow();
@@ -122,13 +117,6 @@ app.on('window-all-closed', () => {
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
   if (process.platform !== 'darwin') {
-    if (child) {
-      if (process.platform === 'win32') {
-        spawnSync('taskkill', ['/f', '/pid', child.pid!.toString(), '/t']);
-      } else {
-        child.kill();
-      }
-    }
     app.quit();
   }
 });
@@ -140,3 +128,18 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// Visual Studio starts a debugging session by running start.js, which sets the
+// START_PID environment variable.  On Windows, killing it with the /T flag
+// will stop all of the processes it started, including Electronmon and the
+// Web, ensuring a complete shut-down.
+const startPid = process.env['START_PID'];
+if (startPid) {
+  app.on('quit', () => {
+    if (process.platform === 'win32') {
+      spawnSync('taskkill', ['/F', '/PID', startPid, '/T']);
+    } else {
+      process.kill(Number(startPid));
+    }
+  });
+}
