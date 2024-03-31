@@ -5,7 +5,7 @@ type ObserverFn = (message: string) => void;
 (() => {
   let messageHandler: ObserverFn = (_) => { };
 
-  ipcRenderer.on('main', (_event, message: string) => {
+  ipcRenderer.on('now', (_event, message: string) => {
     // Do not include the event since it includes the sender.
     messageHandler(message);
   });

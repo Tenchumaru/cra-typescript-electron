@@ -132,14 +132,23 @@ app.on('activate', () => {
 // Visual Studio starts a debugging session by running start.js, which sets the
 // START_PID environment variable.  On Windows, killing it with the /T flag
 // will stop all of the processes it started, including Electronmon and the
-// Web, ensuring a complete shut-down.
+// Web, ensuring a complete shut-down.  Perform this process termination iff
+// quitting due to user action instead of Electronmon.
 const startPid = process.env['START_PID'];
 if (startPid) {
+  let reloading = false;
+  process.on('message', (message) => {
+    if (message === 'reset') {
+      reloading = true;
+    }
+  });
   app.on('quit', () => {
-    if (process.platform === 'win32') {
-      spawnSync('taskkill', ['/F', '/PID', startPid, '/T']);
-    } else {
-      process.kill(Number(startPid));
+    if (!reloading) {
+      if (process.platform === 'win32') {
+        spawnSync('taskkill', ['/F', '/PID', startPid, '/T']);
+      } else {
+        process.kill(Number(startPid));
+      }
     }
   });
 }

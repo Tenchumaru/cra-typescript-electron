@@ -47,7 +47,7 @@ export function setActiveWindow(window: BrowserWindow) {
 
 export function startTimer() {
   if (!timerId) {
-    timerId = setInterval(() => activeWindow.webContents.send('main', new Date().toString()), 990);
+    timerId = setInterval(() => activeWindow.webContents.send('now', new Date().toString()), 990);
   }
 }
 
