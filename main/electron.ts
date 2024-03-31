@@ -137,12 +137,10 @@ app.on('activate', () => {
 const startPid = process.env['START_PID'];
 if (startPid) {
   let reloading = false;
-  process.on('message', (_message) => {
-    // Electronmon sends messages unrelated to restarting, such as "reload".
-    // Set a timer to ignore messages from Electronmon that don't result in a
-    // shut-down to distinguish them from quitting due to user action.
-    reloading = true;
-    setTimeout(() => reloading = false, 99);
+  process.on('message', (message) => {
+    if (message === 'reset') {
+      reloading = true;
+    }
   });
   app.on('quit', () => {
     if (!reloading) {
