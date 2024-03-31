@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 // Set the START_PID environment variable.  The application will use it to stop
 // a Visual Studio debugging session.
 process.env['START_PID'] = process.pid.toString();
-const child = spawn('npm.cmd', ['start'], { shell: true });
+const child = spawn(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['start'], { shell: true });
 child.stdout.on('data', (buffer) => {
   process.stdout.write(buffer);
 });
