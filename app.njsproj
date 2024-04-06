@@ -49,6 +49,7 @@
     <TypeScriptCompile Include="main\api.ts" />
     <TypeScriptCompile Include="main\electron.ts" />
     <TypeScriptCompile Include="main\preload.ts" />
+    <TypeScriptCompile Include="public\electron.ts" />
     <TypeScriptCompile Include="src\App.test.tsx" />
     <TypeScriptCompile Include="src\App.tsx" />
     <TypeScriptCompile Include="src\components\Hello.test.tsx" />
@@ -56,6 +57,7 @@
     <TypeScriptCompile Include="src\index.tsx" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\react-app-env.d.ts" />
+    <TypeScriptCompile Include="src\reportWebVitals.ts" />
     <TypeScriptCompile Include="src\setupTests.ts" />
     <TypeScriptCompile Include="src\main.mock.ts" />
   </ItemGroup>

@@ -8,8 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		React.md = React.md
 		README.md = README.md
 		README.txt = README.txt
-		start.js = start.js
-		wait-for-web.js = wait-for-web.js
+		start.ts = start.ts
+		wait-for-web.ts = wait-for-web.ts
 	EndProjectSection
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "app", "app.njsproj", "{FB5105E7-8FC5-4DB7-8487-AE22773AF578}"

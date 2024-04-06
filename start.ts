@@ -4,12 +4,8 @@ const { spawn } = require('child_process');
 // a Visual Studio debugging session.
 process.env['START_PID'] = process.pid.toString();
 const child = spawn(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['start'], { shell: true });
-child.stdout.on('data', (buffer) => {
-  process.stdout.write(buffer);
-});
-child.stderr.on('data', (buffer) => {
-  process.stderr.write(buffer);
-});
+child.stdout.on('data', process.stdout.write.bind(process.stdout));
+child.stderr.on('data', process.stderr.write.bind(process.stderr));
 child.on('spawn', () => {
   console.log('spawned NPM, process ID', child.pid);
 });
