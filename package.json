@@ -13,9 +13,9 @@
     "start": "npm run electron:build && cross-env DEV_URL=http://localhost:4349 concurrently \"tsc --project main -w\" \"npm run electron:start-web\" \"electronmon build/electron.js\"",
     "release": "npm run build && electron-builder --publish=never",
     "clean": "cd main && tsc --build --clean",
-    "electron:build": "tsc --project main",
+    "electron:build": "tsc start.ts && tsc public/electron.ts && tsc --project main",
     "electron:start-web": "cross-env BROWSER=none PORT=4349 react-scripts start",
-    "electron:wait-for-web": "node wait-for-web.js",
+    "electron:wait-for-web": "tsc wait-for-web.ts && node wait-for-web.js",
     "eject": "react-scripts eject"
   },
   "build": {
