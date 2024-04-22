@@ -54,11 +54,6 @@ function createWindow() {
     startTimer();
   });
 
-  // Emitted when the window is to be closed.
-  window.on('close', () => {
-    stopTimer();
-  });
-
   // Emitted when the window is closed.
   window.on('closed', () => {
     // Remove the window from the collection.
@@ -114,6 +109,8 @@ app.on('ready', startApplication);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+    stopTimer();
+
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
   if (process.platform !== 'darwin') {
