@@ -2,11 +2,13 @@
 import { join } from 'path';
 import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
 import { format, parse } from 'url';
-import { setActiveWindow, startTimer, stopTimer } from './api';
+import { createApi } from './api';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 // Keep references to all window objects so they aren't garbage-collected.
 const windows: BrowserWindow[] = [];
+
+const api = createApi();
 
 function createWindow() {
   // Create the browser window.
@@ -51,7 +53,7 @@ function createWindow() {
 
   window.webContents.on('did-finish-load', () => {
     // This might run multiple times since it depends on the renderer process.
-    startTimer();
+    api.startTimer();
   });
 
   // Emitted when the window is closed.
@@ -62,7 +64,7 @@ function createWindow() {
 
   // Emitted when the window gains focus.
   window.on('focus', () => {
-    setActiveWindow(window);
+    api.activeWindow = window;
   });
 
   windows.push(window);
@@ -109,7 +111,7 @@ app.on('ready', startApplication);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-    stopTimer();
+    api.stopTimer();
 
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
