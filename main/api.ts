@@ -1,6 +1,7 @@
 import { BrowserWindow, ipcMain, dialog, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
 import { readFile, writeFile } from 'fs/promises';
 import { EOL } from 'os';
+
 export interface IApi {
   startTimer: () => void;
   stopTimer: () => void;
@@ -60,7 +61,7 @@ export function createApi(): IApi {
 
   function startTimer() {
     if (!timerId) {
-      timerId = setInterval(() => activeWindow.webContents.send('now', new Date().toString()), 990);
+      timerId = setInterval(() => activeWindow.webContents.send('now', new Date().toString()), 1000);
     }
   }
 
