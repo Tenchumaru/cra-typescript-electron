@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 import { join } from 'path';
 import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
-import { format, parse } from 'url';
+import { format, urlToHttpOptions } from 'url';
 import { createApi } from './api';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 
@@ -27,7 +27,7 @@ function createWindow() {
 
       // Test Web request overriding.
       session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
-        const url = parse(details.url);
+        const url = new URL(details.url);
         if (url.hostname === 'localhost' && url.protocol === 'https:') {
           callback({ redirectURL: 'http://httpbin.org/get' });
         } else if (url.hostname && url.hostname.startsWith('localhost.test') && url.hash) {
@@ -76,7 +76,7 @@ function createWindow() {
       that: 'two',
     };
     const url = process.env.DEV_URL ? format({
-      ...parse(process.env.DEV_URL),
+      ...urlToHttpOptions(new URL(process.env.DEV_URL)),
       query,
     }) : format({
       protocol: 'file',
