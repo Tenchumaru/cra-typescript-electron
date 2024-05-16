@@ -1,9 +1,9 @@
-// Modules to control application life and create native browser window
-import { join } from 'path';
+// Modules to control application lifetime and create native browser window
+import { ChildProcess, spawn, spawnSync } from 'child_process';
 import { app, BrowserWindow, Menu, MenuItem, session } from 'electron';
+import { join } from 'path';
 import { format, urlToHttpOptions } from 'url';
 import { createApi } from './api';
-import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 // Keep references to all window objects so they aren't garbage-collected.
 const windows: BrowserWindow[] = [];
@@ -16,40 +16,11 @@ function createWindow() {
   const webPreferences = { contextIsolation: true, nodeIntegration: false, preload };
   const window = new BrowserWindow({ width: 800, height: 600, webPreferences });
 
-  // Check the current application menu.
-  const menu = Menu.getApplicationMenu();
-  if (menu) {
-    const submenu = menu.items[process.platform === 'darwin' ? 1 : 0].submenu!;
-    if (submenu.items.length < 2) {
-      // Add the "New Window" command to the application "File" menu.
-      submenu.insert(0, new MenuItem({ click: createWindow, label: '&New Window', accelerator: 'CommandOrControl+N' }));
-      Menu.setApplicationMenu(menu);
-
-      // Test Web request overriding.
-      session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
-        const url = new URL(details.url);
-        if (url.hostname === 'localhost' && url.protocol === 'https:') {
-          callback({ redirectURL: 'http://httpbin.org/get' });
-        } else if (url.hostname && url.hostname.startsWith('localhost.test') && url.hash) {
-          callback({ redirectURL: composeApplicationUrl() + url.hash });
-        } else {
-          callback({});
-        }
-      });
-
-      // Set the "X-Requested-With" header of all requests.
-      session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-        details.requestHeaders['X-Requested-With'] = `cra-typescript-electron; ${app.getVersion()}`;
-        callback({ requestHeaders: details.requestHeaders });
-      });
-    }
-  }
-
   // Load the index.html of the app.
   window.loadURL(composeApplicationUrl());
 
   // Open the Chromium Development Tools.
-  // window.webContents.openDevTools();
+  //window.webContents.openDevTools();
 
   window.webContents.on('did-finish-load', () => {
     // This might run multiple times since it depends on the renderer process.
@@ -68,30 +39,60 @@ function createWindow() {
   });
 
   windows.push(window);
+}
 
-  function composeApplicationUrl(): string {
-    // tslint:disable:object-literal-sort-keys
-    const query = {
-      this: 1,
-      that: 'two',
-    };
-    const url = process.env.DEV_URL ? format({
-      ...urlToHttpOptions(new URL(process.env.DEV_URL)),
-      query,
-    }) : format({
-      protocol: 'file',
-      pathname: join(__dirname, '..', 'build', 'index.html'),
-      query,
-    });
-    return url;
-    // tslint:enable
-  }
+function composeApplicationUrl(): string {
+  // tslint:disable:object-literal-sort-keys
+  const query = {
+    this: 1,
+    that: 'two',
+  };
+  const url = process.env.DEV_URL ? format({
+    ...urlToHttpOptions(new URL(process.env.DEV_URL)),
+    query,
+  }) : format({
+    protocol: 'file',
+    pathname: join(__dirname, '..', 'build', 'index.html'),
+    query,
+  });
+  return url;
+  // tslint:enable
 }
 
 async function startApplication() {
   if (process.env.DEV_URL) {
     await runNpmAsync('exit', 'electron:wait-for-web');
   }
+
+  // Check the current application menu.
+  const menu = Menu.getApplicationMenu();
+  if (menu) {
+    const submenu = menu.items[process.platform === 'darwin' ? 1 : 0].submenu!;
+    if (submenu.items.length < 2) {
+      // Add the "New Window" command to the application "File" menu.
+      submenu.insert(0, new MenuItem({ click: createWindow, label: '&New Window', accelerator: 'CommandOrControl+N' }));
+      Menu.setApplicationMenu(menu);
+    }
+  }
+
+  // Set the "X-Requested-With" header of all requests.
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['X-Requested-With'] = `cra-typescript-electron; ${app.getVersion()}`;
+    callback({ requestHeaders: details.requestHeaders });
+  });
+
+  // Test Web request overriding.
+  session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+    const url = new URL(details.url);
+    if (url.hostname === 'localhost' && url.protocol === 'https:') {
+      callback({ redirectURL: 'http://httpbin.org/get' });
+    } else if (url.hostname && url.hostname.startsWith('localhost.test') && url.hash) {
+      callback({ redirectURL: composeApplicationUrl() + url.hash });
+    } else {
+      callback({});
+    }
+  });
+
   createWindow();
 }
 
@@ -111,7 +112,7 @@ app.on('ready', startApplication);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-    api.stopTimer();
+  api.stopTimer();
 
   // On OS X it's common for applications and their menu bar to stay active
   // until the user quits explicitly with Cmd+Q.
@@ -132,11 +133,11 @@ app.on('activate', () => {
 // START_PID environment variable.  On Windows, killing it with the /T flag
 // will stop all of the processes it started, including Electronmon and the
 // Web, ensuring a complete shut-down.  Perform this process termination iff
-// quitting due to user action instead of Electronmon.
+// quitting due to user action instead of Electronmon restarting the app.
 const startPid = process.env['START_PID'];
 if (startPid) {
   let reloading = false;
-  process.on('message', (message) => {
+  process.on('message', (message: string) => {
     if (message === 'reset') {
       reloading = true;
     }
