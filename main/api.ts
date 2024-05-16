@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, dialog, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
+import { BrowserWindow, dialog, ipcMain, MessageBoxOptions, OpenDialogOptions, SaveDialogOptions } from 'electron';
 import { readFile, writeFile } from 'fs/promises';
 import { EOL } from 'os';
 
@@ -13,11 +13,9 @@ export function createApi(): IApi {
   let timerId: ReturnType<typeof setInterval> | undefined;
 
   ipcMain.handle('delayResponse', async (_event, duration: number, value: string) => {
-    console.log('received delayResponse:', duration, value);
     await new Promise<void>((resolve) => {
       setTimeout(resolve, duration);
     });
-    console.log('responding to delayResponse:', value);
     return value;
   });
   ipcMain.handle('readFile', (_event, filePath: string) => {
