@@ -1,3 +1,11 @@
+## _Archived_
+
+It appears [Create React App](https://create-react-app.dev/) will undergo a major change, becoming something else, most likely a
+launcher for some other framework.  Here is a [long post](https://github.com/reactjs/react.dev/pull/5487#issuecomment-1409720741)
+by the creator and primary maintainer of it in which he describes his desire to move it in a different direction.  As a result, I
+am archiving this repository in favor of another, [Vite TypeScript Electron](/Tenchumaru/vite-typescript-electron), based on a
+popular alternative, [Electron Vite](https://electron-vite.org/).
+
 # Create-React-App TypeScript Electron
 
 This project demonstrates using a React front end in an Electron application with both the front end (i.e., the "renderer" process
